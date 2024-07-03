@@ -12,7 +12,7 @@ const SignupPage = () => {
         <form
           className={styles.form}
           id="signup"
-          action="http://localhost:3000/signup"
+          action="http://localhost:3000/users/signup"
           method="post"
         >
           <InputContainer
