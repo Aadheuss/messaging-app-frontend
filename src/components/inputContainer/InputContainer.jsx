@@ -14,14 +14,14 @@ const InputContainer = ({
   autoComplete,
   text,
 }) => {
-  const [inputTxt, setInputTxt] = useState(0);
+  const [inputTxt, setInputTxt] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const myErrMsg = errMsg
     ? errMsg.filter((msg) => msg.path === name).map((msg) => msg.msg)
     : [];
 
   const monitorInput = (e) => {
-    setInputTxt(e.target.value.length);
+    setInputTxt(e.target.value);
   };
 
   const activateFocus = () => {
@@ -31,14 +31,6 @@ const InputContainer = ({
   const deactivateFocus = () => {
     setIsFocused(false);
   };
-
-  useEffect(() => {
-    setInputTxt(0);
-
-    return () => {
-      setInputTxt(0);
-    };
-  }, []);
 
   return (
     <div>
@@ -69,6 +61,7 @@ const InputContainer = ({
           minLength={length ? (length.min > 0 ? length.min : null) : null}
           placeholder={text}
           autoComplete={autoComplete ? id : null}
+          value={inputTxt}
         ></input>
       </div>
     </div>
