@@ -15,11 +15,7 @@ const InputContainer = ({
   const [inputTxt, setInputTxt] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const myErrMsg = errMsg
-    ? errMsg.filter((msg) => {
-        if (msg.path === name) {
-          return msg.msg;
-        }
-      })
+    ? errMsg.filter((msg) => msg.path === name).map((msg) => msg.msg)
     : [];
 
   const monitorInput = (e) => {
