@@ -48,7 +48,7 @@ const SignupPage = () => {
             id="username"
             type="text"
             name="username"
-            isRequired={false}
+            isRequired={true}
             autoComplete={true}
             text="Username"
           />
@@ -58,7 +58,6 @@ const SignupPage = () => {
             type="password"
             name="password"
             isRequired={true}
-            autoComplete={false}
             text="Password"
           />
           <div>
