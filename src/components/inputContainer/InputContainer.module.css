@@ -49,3 +49,13 @@ input:invalid:not(:placeholder-shown):not(:focus-visible) {
 .inputHidden::placeholder {
   opacity: 0;
 }
+
+.clientValidation {
+  width: 100%;
+  display: flex;
+  text-align: start;
+}
+
+.rule {
+  font-weight: 500;
+}

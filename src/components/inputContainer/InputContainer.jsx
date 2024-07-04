@@ -39,9 +39,6 @@ const InputContainer = ({
           <ErrMsgList errMsg={myErrMsg} />
         </div>
       )}
-      {(inputTxt || isFocused) && (
-        <div className={styles.clientValidation}>{clientValidation}</div>
-      )}
       <div className={styles.inputContainer}>
         <label
           className={inputTxt || isFocused ? styles.labelHidden : styles.label}
@@ -64,6 +61,15 @@ const InputContainer = ({
           value={inputTxt}
         ></input>
       </div>
+      {clientValidation && (inputTxt || isFocused) && (
+        <ul className={styles.clientValidation}>
+          {clientValidation.map((rule, index) => (
+            <li key={index} className={styles.rule}>
+              {rule}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
@@ -75,7 +81,7 @@ InputContainer.propTypes = {
   name: PropTypes.string,
   isRequired: PropTypes.bool,
   autoComplete: PropTypes.bool,
-  clientValidation: PropTypes.string,
+  clientValidation: PropTypes.arrayOf(PropTypes.string),
   length: PropTypes.shape({ min: PropTypes.number, max: PropTypes.number }),
   text: PropTypes.string,
 };

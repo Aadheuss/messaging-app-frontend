@@ -60,6 +60,7 @@ const SignupPage = () => {
             isRequired={true}
             text="Password"
             length={{ min: 8, max: 0 }}
+            clientValidation={["minimum of 8 digits"]}
           />
           <div>
             <button className={styles.signupBtn}>Sign up</button>
