@@ -1,0 +1,13 @@
+.errMsgContainer {
+  display: flex;
+  gap: 1em;
+  list-style: none;
+  padding: 0.25em 0;
+  margin: 0;
+}
+
+.msg {
+  text-align: start;
+  color: #ea642f;
+  padding: 0;
+}

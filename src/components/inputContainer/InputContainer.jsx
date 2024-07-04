@@ -39,8 +39,12 @@ const InputContainer = ({
   }, []);
 
   return (
-    <>
-      {myErrMsg.length > 0 && <ErrMsgList errMsg={myErrMsg} />}
+    <div>
+      {myErrMsg.length > 0 && (
+        <div className={styles.inputContainerWidth}>
+          <ErrMsgList errMsg={myErrMsg} />
+        </div>
+      )}
       <div className={styles.inputContainer}>
         <label
           className={inputTxt || isFocused ? styles.labelHidden : styles.label}
@@ -61,7 +65,7 @@ const InputContainer = ({
           autoComplete={autoComplete ? id : null}
         ></input>
       </div>
-    </>
+    </div>
   );
 };
 

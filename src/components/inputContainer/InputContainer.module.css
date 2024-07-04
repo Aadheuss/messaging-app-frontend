@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  width: min(calc(200px + 10vw), 80vw);
   gap: 1rem;
 }
 
@@ -18,10 +19,15 @@
 }
 
 .input {
+  width: 100%;
   padding: 0.25em 0.5em;
   font-family: inherit;
   border-radius: 4px;
   font-size: clamp(1rem, calc(0.8rem + calc(0.25vw + 0.25vh)), 1.75rem);
+}
+
+.inputContainerWidth {
+  width: min(calc(200px + 10vw), 80vw);
 }
 
 .input::placeholder {
