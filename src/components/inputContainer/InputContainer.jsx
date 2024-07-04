@@ -9,6 +9,8 @@ const InputContainer = ({
   type,
   name,
   isRequired,
+  clientValidation = null,
+  length,
   autoComplete,
   text,
 }) => {
@@ -45,6 +47,9 @@ const InputContainer = ({
           <ErrMsgList errMsg={myErrMsg} />
         </div>
       )}
+      {(inputTxt || isFocused) && (
+        <div className={styles.clientValidation}>{clientValidation}</div>
+      )}
       <div className={styles.inputContainer}>
         <label
           className={inputTxt || isFocused ? styles.labelHidden : styles.label}
@@ -61,6 +66,7 @@ const InputContainer = ({
           id={id}
           name={name}
           required={isRequired}
+          minLength={length ? (length.min > 0 ? length.min : null) : null}
           placeholder={text}
           autoComplete={autoComplete ? id : null}
         ></input>
@@ -76,6 +82,8 @@ InputContainer.propTypes = {
   name: PropTypes.string,
   isRequired: PropTypes.bool,
   autoComplete: PropTypes.bool,
+  clientValidation: PropTypes.string,
+  length: PropTypes.shape({ min: PropTypes.number, max: PropTypes.number }),
   text: PropTypes.string,
 };
 

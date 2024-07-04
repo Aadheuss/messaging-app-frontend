@@ -59,6 +59,7 @@ const SignupPage = () => {
             name="password"
             isRequired={true}
             text="Password"
+            length={{ min: 8, max: 0 }}
           />
           <div>
             <button className={styles.signupBtn}>Sign up</button>

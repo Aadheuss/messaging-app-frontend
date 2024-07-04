@@ -2,7 +2,6 @@ import styles from "./ErrMsgList.module.css";
 import PropTypes from "prop-types";
 
 const ErrMsgList = ({ errMsg }) => {
-  console.log(errMsg);
   return (
     <ul className={styles.errMsgContainer}>
       {errMsg.map((msg, index) => (
