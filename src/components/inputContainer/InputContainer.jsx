@@ -57,7 +57,13 @@ const InputContainer = ({
           required={isRequired}
           minLength={length ? (length.min > 0 ? length.min : null) : null}
           placeholder={text}
-          autoComplete={autoComplete ? id : null}
+          autoComplete={
+            autoComplete
+              ? typeof autoComplete === "string"
+                ? autoComplete
+                : id
+              : null
+          }
           value={inputTxt}
         ></input>
       </div>
@@ -80,7 +86,7 @@ InputContainer.propTypes = {
   type: PropTypes.oneOf(["text", "password"]),
   name: PropTypes.string,
   isRequired: PropTypes.bool,
-  autoComplete: PropTypes.bool,
+  autoComplete: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   clientValidation: PropTypes.arrayOf(PropTypes.string),
   length: PropTypes.shape({ min: PropTypes.number, max: PropTypes.number }),
   text: PropTypes.string,
