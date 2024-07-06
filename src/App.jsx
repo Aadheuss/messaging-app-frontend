@@ -1,11 +1,10 @@
-import { useState } from "react";
 import "./App.css";
-import SignupPage from "./components/signupPage/SignupPage";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <SignupPage />
+      <Outlet />
     </>
   );
 }
