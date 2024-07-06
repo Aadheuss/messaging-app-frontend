@@ -16,23 +16,27 @@ const SignupPage = () => {
     formData.append("username", e.target.elements.username.value);
     formData.append("password", e.target.elements.password.value);
 
-    const res = await fetch("http://localhost:3000/users/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: formData,
-    });
+    try {
+      const res = await fetch("http://localhost:3000/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData,
+      });
 
-    const resData = await res.json();
+      const resData = await res.json();
 
-    if (resData.error) {
-      setErrMsg(resData);
-    } else {
-      setErrMsg(null);
+      if (resData.error) {
+        setErrMsg(resData);
+      } else {
+        setErrMsg(null);
+      }
+    } catch (err) {
+      alert("Oops, Something went wrong...");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
