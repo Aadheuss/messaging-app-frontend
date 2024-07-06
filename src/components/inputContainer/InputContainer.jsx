@@ -1,6 +1,6 @@
 import styles from "./InputContainer.module.css";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ErrMsgList from "../errMsgList/ErrMsgList";
 
 const InputContainer = ({
@@ -61,7 +61,7 @@ const InputContainer = ({
           value={inputTxt}
         ></input>
       </div>
-      {clientValidation && (inputTxt || isFocused) && (
+      {clientValidation && isFocused && (
         <ul className={styles.clientValidation}>
           {clientValidation.map((rule, index) => (
             <li key={index} className={styles.rule}>
