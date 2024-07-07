@@ -83,7 +83,10 @@ const InputContainer = ({
 };
 
 InputContainer.propTypes = {
-  err: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  err: PropTypes.shape({
+    errMsg: PropTypes.objectOf(PropTypes.string),
+    errMsgHandler: PropTypes.func,
+  }),
   id: PropTypes.string,
   type: PropTypes.oneOf(["text", "password"]),
   name: PropTypes.string,
