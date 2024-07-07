@@ -5,7 +5,9 @@ const NotFoundErrPage = () => {
     <main className={styles.container}>
       <p className={styles.headerTxt}>404</p>
       <p className={styles.txtMain}>Page not found</p>
-      <p className={styles.txt}>The Page you are looking for doesn't exist. </p>
+      <p className={styles.txt}>
+        The Page you are looking for doesn&#039;t exist.{" "}
+      </p>
     </main>
   );
 };
