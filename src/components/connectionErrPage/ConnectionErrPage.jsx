@@ -1,5 +1,5 @@
 import styles from "./ConnectionErrPage.module.css";
-import img from "../../assets/error_FILL.svg";
+import img from "../../assets/images/error_FILL.svg";
 
 const ConnectionErrPage = () => {
   return (

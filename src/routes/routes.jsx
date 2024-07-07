@@ -1,4 +1,3 @@
-import { element } from "prop-types";
 import App from "../App";
 import SignupPage from "../components/signupPage/SignupPage";
 import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage";
