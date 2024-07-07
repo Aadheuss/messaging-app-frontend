@@ -1,12 +1,12 @@
 import styles from "./ErrMsgList.module.css";
 import PropTypes from "prop-types";
 
-const ErrMsgList = ({ errMsg }) => {
+const ErrMsgList = ({ id, errMsg }) => {
   return (
-    <ul className={styles.errMsgContainer}>
+    <ul className={styles.errMsgContainer} id={`${id}-error`} role="alert">
       {errMsg.map((msg, index) => (
         <li key={index} className={styles.msg}>
-          {msg}
+          <p>{msg}</p>
         </li>
       ))}
     </ul>
@@ -14,6 +14,7 @@ const ErrMsgList = ({ errMsg }) => {
 };
 
 ErrMsgList.propTypes = {
+  id: PropTypes.string,
   errMsg: PropTypes.arrayOf(PropTypes.string),
 };
 

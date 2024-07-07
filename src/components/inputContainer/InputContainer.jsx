@@ -36,7 +36,7 @@ const InputContainer = ({
     <div>
       {myErrMsg.length > 0 && (
         <div className={styles.inputContainerWidth}>
-          <ErrMsgList errMsg={myErrMsg} />
+          <ErrMsgList id={id} errMsg={myErrMsg} />
         </div>
       )}
       <div className={styles.inputContainer}>
@@ -64,11 +64,12 @@ const InputContainer = ({
                 : id
               : null
           }
+          aria-describedby={`${id}-error`}
           value={inputTxt}
         ></input>
       </div>
       {clientValidation && isFocused && (
-        <ul className={styles.clientValidation}>
+        <ul className={styles.clientValidation} id={`${id}-error`}>
           {clientValidation.map((rule, index) => (
             <li key={index} className={styles.rule}>
               {rule}
