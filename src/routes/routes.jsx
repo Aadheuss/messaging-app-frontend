@@ -13,11 +13,11 @@ const routes = [
         element: <SignupPage />,
       },
       {
-        path: "/error",
+        path: "error",
         element: <ConnectionErrPage />,
       },
       {
-        path: "/404",
+        path: "404",
         element: <NotFoundErrPage />,
       },
     ],
