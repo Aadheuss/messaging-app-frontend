@@ -60,7 +60,10 @@ const SignupPage = () => {
           method="post"
         >
           <InputContainer
-            errMsg={errMsg ? errMsg.error.details : null}
+            err={{
+              errMsg: errMsg ? errMsg.error.details : null,
+              setErrMsg: setErrMsg,
+            }}
             id="username"
             type="text"
             name="username"
@@ -69,7 +72,11 @@ const SignupPage = () => {
             text="Username"
           />
           <InputContainer
-            errMsg={errMsg ? errMsg.error.details : null}
+            setErrMsg={setErrMsg}
+            err={{
+              errMsg: errMsg ? errMsg.error.details : null,
+              setErrMsg: setErrMsg,
+            }}
             id="password"
             type="password"
             name="password"

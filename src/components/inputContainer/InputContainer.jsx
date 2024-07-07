@@ -4,7 +4,7 @@ import { useState } from "react";
 import ErrMsgList from "../errMsgList/ErrMsgList";
 
 const InputContainer = ({
-  errMsg,
+  err,
   id,
   type,
   name,
@@ -16,12 +16,13 @@ const InputContainer = ({
 }) => {
   const [inputTxt, setInputTxt] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const myErrMsg = errMsg
-    ? errMsg.filter((msg) => msg.path === name).map((msg) => msg.msg)
+  const myErrMsg = err.errMsg
+    ? err.errMsg.filter((msg) => msg.path === name).map((msg) => msg.msg)
     : [];
 
   const monitorInput = (e) => {
     setInputTxt(e.target.value);
+    err.setErrMsg(null);
   };
 
   const activateFocus = () => {
@@ -82,7 +83,7 @@ const InputContainer = ({
 };
 
 InputContainer.propTypes = {
-  errMsg: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  err: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   id: PropTypes.string,
   type: PropTypes.oneOf(["text", "password"]),
   name: PropTypes.string,
