@@ -19,7 +19,7 @@ const SignupPage = () => {
     formData.append("password", e.target.elements.password.value);
 
     try {
-      const res = await fetch("http://localhost:3000/users/signup", {
+      const res = await fetch("http://localhost:3000/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
