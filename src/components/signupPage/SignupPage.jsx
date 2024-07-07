@@ -30,13 +30,14 @@ const SignupPage = () => {
       const resData = await res.json();
 
       if (resData.error) {
+        if (resData.error.status === 404) {
+          navigate("/error");
+        }
         setErrMsg(resData);
       } else {
         setErrMsg(null);
       }
     } catch (err) {
-      console.log("Oops, Something went wrong...");
-      console.log(history);
       navigate("/error");
     } finally {
       setIsLoading(false);
