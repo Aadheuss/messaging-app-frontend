@@ -2,8 +2,10 @@ import InputContainer from "../inputContainer/InputContainer";
 import Loader from "../loader/Loader";
 import styles from "./SignupPage.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +35,9 @@ const SignupPage = () => {
         setErrMsg(null);
       }
     } catch (err) {
-      alert("Oops, Something went wrong...");
+      console.log("Oops, Something went wrong...");
+      console.log(history);
+      navigate("/error");
     } finally {
       setIsLoading(false);
     }
