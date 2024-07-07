@@ -1,11 +1,3 @@
-.signupPageContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100dvw;
-  min-height: 100dvh;
-}
-
 .signupPage {
   display: flex;
   flex-direction: column;
