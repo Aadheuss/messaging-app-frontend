@@ -9,7 +9,7 @@ const routes = [
     element: <App />,
     children: [
       {
-        path: "users/signup",
+        path: "signup",
         element: <SignupPage />,
       },
       {
