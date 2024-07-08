@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  width: min(calc(200px + 10vw), 80vw);
+  width: 100%;
   gap: 1rem;
 }
 
@@ -51,11 +51,17 @@ input:invalid:not(:placeholder-shown):not(:focus-visible) {
 }
 
 .clientValidation {
-  width: 100%;
+  list-style: none;
+  display: flex;
+  gap: 0.5em;
+  position: absolute;
+  width: calc(100% - 2em);
+  padding: 0.5em 1em;
+  font-size: clamp(0.8rem, calc(0.8rem + 0.15vw), 1.25rem);
+  top: calc(100% - 1rem);
+  background-color: #477094;
+  color: #f4f4f2;
+  border-radius: 0 0 8px 8px;
   display: flex;
   text-align: start;
-}
-
-.rule {
-  font-weight: 500;
 }

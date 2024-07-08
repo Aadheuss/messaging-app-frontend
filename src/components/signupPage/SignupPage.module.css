@@ -3,18 +3,21 @@
   flex-direction: column;
   background-color: #f4f4f2;
   box-shadow: 0 0 15px #c3c3c2;
-  gap: 3rem;
   border-bottom: 3px solid #93b243;
   border-radius: 8px;
-  max-width: min(calc(450px + 15vw), 75vw);
-  padding: clamp(0.5rem, calc(1.5vh + 1.5vw), 3rem);
+  padding: clamp(0.25rem, calc(0.25rem + calc(1.5vh + 1.5vw)), 2.5rem);
 }
 
 .greeting {
   max-width: 72ch;
-  font-size: clamp(1rem, calc(1.75rem + calc(0.5vw + 0.5vh)), 3rem);
-  padding: 0;
   margin: 0;
+  font-size: clamp(1.5rem, calc(2rem + calc(0.5vw + 0.5vh)), 3.5rem);
+}
+
+.formHeading {
+  font-size: clamp(1.15rem, calc(1.5rem + calc(0.15vw + 0.15vh)), 2.5rem);
+  font-weight: 500;
+  margin-top: 0;
 }
 
 .form {
@@ -30,6 +33,7 @@
 
 .signupBtn {
   font-size: clamp(1rem, calc(0.8rem + calc(0.25vw + 0.25vh)), 1.75rem);
-  padding: 0.3em 0.75em;
+  margin: 1em 0 0 0;
+  padding: 0.25em 0.75em;
   background-color: #88ba0a;
 }

@@ -47,11 +47,12 @@ const SignupPage = () => {
   return (
     <>
       {isLoading && <Loader />}
+
       <main className={styles.signupPage}>
         <h1 className={styles.greeting}>
-          Welcome to msg<span className={styles.logoTxt}>Chat</span>, please
-          sign up to start chatting
+          Welcome to msg<span className={styles.logoTxt}>Chat</span>
         </h1>
+        <p className={styles.formHeading}>Sign up to start chatting</p>
         <form
           className={styles.form}
           onSubmit={submitForm}
