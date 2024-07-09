@@ -84,7 +84,7 @@ const InputContainer = ({
 
 InputContainer.propTypes = {
   err: PropTypes.shape({
-    errMsg: PropTypes.objectOf(PropTypes.string),
+    errMsg: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
     errMsgHandler: PropTypes.func,
   }),
   id: PropTypes.string,
