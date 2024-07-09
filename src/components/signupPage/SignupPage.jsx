@@ -36,6 +36,7 @@ const SignupPage = () => {
         setErrMsg(resData);
       } else {
         setErrMsg(null);
+        navigate("/login");
       }
     } catch (err) {
       navigate("/error");
@@ -45,7 +46,7 @@ const SignupPage = () => {
   };
 
   return (
-    <>
+    <div className={styles.wrapper}>
       {isLoading && <Loader />}
 
       <main className={styles.signupPage}>
@@ -92,7 +93,7 @@ const SignupPage = () => {
           </div>
         </form>
       </main>
-    </>
+    </div>
   );
 };
 

@@ -61,7 +61,7 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <div className={styles.wrapper}>
       {isLoading && <Loader />}
 
       <main className={styles.signupPage}>
@@ -107,7 +107,7 @@ const LoginPage = () => {
           </div>
         </form>
       </main>
-    </>
+    </div>
   );
 };
 
