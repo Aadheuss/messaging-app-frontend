@@ -35,11 +35,7 @@ const InputContainer = ({
 
   return (
     <>
-      {myErrMsg.length > 0 && (
-        <div className={styles.inputContainerWidth}>
-          <ErrMsgList id={id} errMsg={myErrMsg} />
-        </div>
-      )}
+      {myErrMsg.length > 0 && <ErrMsgList id={id} errMsg={myErrMsg} />}
       <div className={styles.inputContainer}>
         <label
           className={inputTxt || isFocused ? styles.labelHidden : styles.label}

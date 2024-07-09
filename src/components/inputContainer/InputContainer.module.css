@@ -34,10 +34,6 @@ input:invalid:not(:placeholder-shown):not(:focus-visible) {
   border: 2.7px solid #ea642f;
 }
 
-.inputContainerWidth {
-  width: min(calc(200px + 10vw), 80vw);
-}
-
 .input::placeholder {
   font-weight: 500;
 }

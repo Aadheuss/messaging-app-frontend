@@ -5,8 +5,8 @@ const ErrMsgList = ({ id, errMsg }) => {
   return (
     <ul className={styles.errMsgContainer} id={`${id}-error`} role="alert">
       {errMsg.map((msg, index) => (
-        <li key={index} className={styles.msg}>
-          <p>{msg}</p>
+        <li key={index}>
+          <p className={styles.msg}>{msg}</p>
         </li>
       ))}
     </ul>
