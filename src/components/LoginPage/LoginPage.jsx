@@ -29,6 +29,7 @@ const LoginPage = () => {
     };
 
     checkLogin();
+    //eslint-disable-next-line
   }, []);
 
   const submitForm = async (e) => {
