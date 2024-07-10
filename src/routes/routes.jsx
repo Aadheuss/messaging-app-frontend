@@ -2,7 +2,7 @@ import App from "../App";
 import SignupPage from "../components/signupPage/SignupPage";
 import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage";
 import NotFoundErrPage from "../components/notFoundErrPage/NotFoundErrPage";
-import LoginPage from "../components/LoginPage/LoginPage";
+import LoginPage from "../components/loginPage/LoginPage";
 
 const routes = [
   {
