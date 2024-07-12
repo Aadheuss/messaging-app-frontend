@@ -1,38 +1,33 @@
 import styles from "./LoginPage.module.css";
 import InputContainer from "../inputContainer/InputContainer";
 import Loader from "../loader/Loader";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext/UserContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
-    const checkLogin = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/login", {
-          credentials: "include",
-        });
 
-        const resData = await res.json();
-        if (!resData.error) {
-          navigate("/");
-        }
-      } catch (err) {
-        console.log("connection error");
-      } finally {
-        setIsLoading(false);
-        setIsMounted(true);
+    console.log({ user, setUser });
+
+    const checkLogin = async () => {
+      if (user) {
+        navigate("/");
       }
+      setIsLoading(false);
+      setIsMounted(true);
     };
 
     checkLogin();
     //eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -75,6 +70,10 @@ const LoginPage = () => {
           },
         });
       } else {
+        const currentUser = resData.user;
+        window.localStorage.setItem("user", JSON.stringify(currentUser));
+
+        setUser(currentUser);
         setErrMsg(null);
         navigate("/");
       }
