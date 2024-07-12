@@ -8,6 +8,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,6 +26,7 @@ const LoginPage = () => {
         console.log("connection error");
       } finally {
         setIsLoading(false);
+        setIsMounted(true);
       }
     };
 
@@ -86,7 +88,7 @@ const LoginPage = () => {
   return (
     <>
       {isLoading && <Loader />}
-      {!isLoading && (
+      {isMounted && (
         <div className={styles.wrapper}>
           <main className={styles.signupPage}>
             <h1 className={styles.greeting}>
