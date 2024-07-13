@@ -1,0 +1,67 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.25rem, calc(0.5rem + calc(0.25vw + 0.25vh)), 1.75rem)
+    clamp(0.5rem, calc(0.75rem + calc(0.25vw + 0.25vh)), 2.5rem);
+}
+
+.logo {
+  font-size: clamp(1.25rem, calc(1.75rem + calc(0.5vw + 0.5vh)), 3rem);
+  margin: 0;
+}
+
+.logoLink {
+  color: inherit;
+}
+
+.logoLink:hover {
+  color: #213547;
+}
+
+.logoTxt {
+  color: #88ba0a;
+}
+
+.logoTxt:hover {
+  color: #9dd70b;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+}
+
+.navItem {
+  font-weight: 700;
+  color: #213547;
+  transition: 0.1s ease-out;
+}
+
+.navItem:hover {
+  color: #88ba0a;
+  transform: scale(1.05);
+  text-shadow: 0 0 5px var(#88ba0a);
+}
+
+.navItemLink {
+  composes: navItem;
+}
+
+.home {
+  display: flex;
+  justify-content: start;
+  height: 100%;
+  padding: 1.5em;
+}
+
+.chatHeader {
+  margin: 0;
+}

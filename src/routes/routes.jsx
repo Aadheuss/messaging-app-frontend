@@ -3,12 +3,15 @@ import SignupPage from "../components/signupPage/SignupPage";
 import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage";
 import NotFoundErrPage from "../components/notFoundErrPage/NotFoundErrPage";
 import LoginPage from "../components/loginPage/LoginPage";
+import HomePage from "../components/homePage/HomePage";
 
 const routes = [
   {
     path: "/",
     element: <App />,
     children: [
+      { path: "", element: <HomePage /> },
+
       {
         path: "signup",
         element: <SignupPage />,
