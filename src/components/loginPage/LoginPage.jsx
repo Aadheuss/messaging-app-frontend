@@ -15,8 +15,6 @@ const LoginPage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    console.log({ user, setUser });
-
     const checkLogin = async () => {
       if (user) {
         navigate("/");
