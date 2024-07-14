@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ const HomePage = () => {
       if (!user) {
         navigate("/login");
       } else {
+        console.log(user);
         try {
           const id = user._id;
 
@@ -25,7 +26,13 @@ const HomePage = () => {
           const resData = await res.json();
 
           if (resData.error) {
-            console.log("error");
+            if (resData.error.status >= 400 && resData.error.status < 500) {
+              window.localStorage.removeItem("user");
+              setUser(null);
+              navigate("/login");
+            }
+
+            console.log("server error");
           } else {
             setUserData(resData.data.user);
           }
