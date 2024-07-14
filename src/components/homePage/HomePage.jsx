@@ -30,7 +30,7 @@ const HomePage = () => {
             setUserData(resData.data.user);
           }
         } catch (err) {
-          console.log(err);
+          navigate("/error");
         }
       }
 
