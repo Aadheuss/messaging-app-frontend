@@ -9,6 +9,7 @@ import logoutIconHover from "../../assets/images/logout_hover.svg";
 const HomePage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
 
@@ -68,6 +69,7 @@ const HomePage = () => {
         }
       }
 
+      setIsMounted(true);
       setIsLoading(false);
     };
 
@@ -77,7 +79,7 @@ const HomePage = () => {
   return (
     <>
       {isLoading && <Loader />}
-      {!isLoading && (
+      {isMounted && (
         <div className={styles.wrapper}>
           <header className={styles.header}>
             <h1 className={styles.logo}>
