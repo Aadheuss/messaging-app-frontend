@@ -3,12 +3,39 @@ import Loader from "../loader/Loader";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/userContext/UserContext";
 import { useNavigate } from "react-router-dom";
+import logoutIcon from "../../assets/images/logout.svg";
+import logoutIconHover from "../../assets/images/logout_hover.svg";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
+
+  const logout = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+
+    try {
+      const res = await fetch(`http://localhost:3000/logout`, {
+        credentials: "include",
+      });
+
+      const resData = res.json();
+
+      if (resData.error) {
+        console.log(resData.error);
+      } else {
+        window.localStorage.removeItem("user");
+        setUserData(null);
+        navigate("/login");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -63,6 +90,21 @@ const HomePage = () => {
                 <li className={styles.navItem}>
                   <a className={styles.navItemLink} href="/profile">
                     {userData && userData.username}
+                  </a>
+                </li>
+                <li className={styles.navItem}>
+                  <a
+                    className={styles.navItemLink}
+                    href="/logout"
+                    onClick={logout}
+                  >
+                    <img
+                      onMouseEnter={(e) => (e.target.src = logoutIconHover)}
+                      onMouseLeave={(e) => (e.target.src = logoutIcon)}
+                      className={styles.logoutIcon}
+                      src={logoutIcon}
+                      alt="logout"
+                    />
                   </a>
                 </li>
               </ul>
