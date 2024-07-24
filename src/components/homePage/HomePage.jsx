@@ -127,7 +127,7 @@ const HomePage = () => {
             </nav>
           </header>
           <main className={styles.home}>
-            <div className={styles.inbox}>
+            <div className={styles.inboxes}>
               <h2 className={styles.inboxHeader}>Messages</h2>
               <ul className={styles.inbox}>
                 {inboxes ? (

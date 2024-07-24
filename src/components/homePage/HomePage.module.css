@@ -80,6 +80,11 @@
   padding: 0;
 }
 
+.inboxes {
+  composes: inbox;
+  border-right: 2px solid #e3e3e1;
+}
+
 .inboxItem {
   padding: 0 1rem;
 }
