@@ -59,12 +59,67 @@
 }
 
 .home {
-  display: flex;
-  justify-content: start;
+  display: grid;
+  grid-template-columns: 1fr 1.75fr;
   height: 100%;
   padding: 1.5em;
+  flex-grow: 1;
 }
 
-.chatHeader {
+.inboxHeader {
   margin: 0;
+  background-color: #e3e3e1;
+  text-align: start;
+  padding: 0.5rem 1rem;
+}
+
+.inbox {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.inboxItem {
+  padding: 0 1rem;
+}
+
+.inboxButton {
+  color: inherit;
+  font-family: inherit;
+  background-color: inherit;
+  width: 100%;
+  text-align: start;
+}
+
+.inboxButton:hover {
+  background-color: #d8d8d6;
+  border: none;
+}
+.inboxName {
+  font-weight: 700;
+  margin: 0;
+}
+
+.blockquote {
+  margin: 0;
+}
+
+.inboxMessage {
+  margin: 0;
+}
+
+.selectedInbox {
+  composes: inbox;
+  margin: 0;
+}
+
+.emptyInbox {
+  composes: inbox;
+  align-items: center;
+  justify-content: center;
+}
+.chatIcon {
+  width: 150px;
+  height: auto;
 }

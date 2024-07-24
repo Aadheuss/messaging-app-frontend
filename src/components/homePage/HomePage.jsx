@@ -5,6 +5,7 @@ import { UserContext } from "../context/userContext/UserContext";
 import { useNavigate } from "react-router-dom";
 import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
+import chatIcon from "../../assets/images/chat.svg";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const HomePage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
+  const [inboxes, setInboxes] = useState(null);
+  const [isInboxActive, setIsInboxActive] = useState(false);
 
   const logout = async (e) => {
     setIsLoading(true);
@@ -48,10 +51,16 @@ const HomePage = () => {
         try {
           const id = user._id;
 
-          const res = await fetch(`http://localhost:3000/user/${id}`, {
-            credentials: "include",
-          });
+          const [res, resInbox] = await Promise.all([
+            fetch(`http://localhost:3000/user/${id}`, {
+              credentials: "include",
+            }),
+            fetch("http://localhost:3000/user/inboxes", {
+              credentials: "include",
+            }),
+          ]);
           const resData = await res.json();
+          const resInboxData = await resInbox.json();
 
           if (resData.error) {
             if (resData.error.status >= 400 && resData.error.status < 500) {
@@ -59,10 +68,15 @@ const HomePage = () => {
               setUser(null);
               navigate("/login");
             }
-
-            console.log("server error");
           } else {
             setUserData(resData.data.user);
+            if (resInboxData.error) {
+              console.log(resInboxData.error);
+            } else {
+              const userInboxes =
+                resInboxData.inboxes.length > 0 ? resInboxData.inboxes : [];
+              setInboxes(userInboxes);
+            }
           }
         } catch (err) {
           navigate("/error");
@@ -113,9 +127,49 @@ const HomePage = () => {
             </nav>
           </header>
           <main className={styles.home}>
-            <h2 className={styles.chatHeader}>
-              Welcome {userData && userData.username}, start chatting here
-            </h2>
+            <div className={styles.inbox}>
+              <h2 className={styles.inboxHeader}>Messages</h2>
+              <ul className={styles.inbox}>
+                {inboxes ? (
+                  inboxes.length > 0 ? (
+                    inboxes.map((inbox) => {
+                      console.log({ inbox, msg: "BRo" });
+                      return (
+                        <li className={styles.inboxItem} key={inbox.inbox._id}>
+                          <button className={styles.inboxButton} type="button">
+                            <figure className={styles.inboxName}>
+                              <figcaption>
+                                {inbox.participants[0].user.username}
+                              </figcaption>
+                            </figure>
+                            <blockquote className={styles.blockquote}>
+                              <p className={styles.inboxMessage}>
+                                {inbox.inbox.last_message.message}
+                              </p>
+                            </blockquote>
+                          </button>
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li>No messages yet</li>
+                  )
+                ) : null}
+              </ul>
+            </div>
+            <ul
+              className={
+                isInboxActive ? styles.selectedInbox : styles.emptyInbox
+              }
+            >
+              {isInboxActive ? (
+                <li>Is Active alright</li>
+              ) : (
+                <li className={styles.noSelection}>
+                  <img className={styles.chatIcon} src={chatIcon} alt=""></img>
+                </li>
+              )}
+            </ul>
           </main>
         </div>
       )}
