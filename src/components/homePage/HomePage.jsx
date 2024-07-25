@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
 import chatIcon from "../../assets/images/chat.svg";
+import Inbox from "../inbox/Inbox";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const HomePage = () => {
   const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
   const [inboxes, setInboxes] = useState(null);
+  const [activeInbox, setActiveInbox] = useState(null);
   const [isInboxActive, setIsInboxActive] = useState(false);
 
   const logout = async (e) => {
@@ -47,7 +49,6 @@ const HomePage = () => {
       if (!user) {
         navigate("/login");
       } else {
-        console.log(user);
         try {
           const id = user._id;
 
@@ -89,6 +90,11 @@ const HomePage = () => {
 
     checkLogin();
   }, [user]);
+
+  const selectInbox = (inboxid) => {
+    setActiveInbox(inboxid);
+    setIsInboxActive(true);
+  };
 
   return (
     <>
@@ -133,10 +139,13 @@ const HomePage = () => {
                 {inboxes ? (
                   inboxes.length > 0 ? (
                     inboxes.map((inbox) => {
-                      console.log({ inbox, msg: "BRo" });
                       return (
                         <li className={styles.inboxItem} key={inbox.inbox._id}>
-                          <button className={styles.inboxButton} type="button">
+                          <button
+                            className={styles.inboxButton}
+                            type="button"
+                            onClick={selectInbox.bind(this, inbox.inbox._id)}
+                          >
                             <figure className={styles.inboxName}>
                               <figcaption>
                                 {inbox.participants[0].user.username}
@@ -157,19 +166,17 @@ const HomePage = () => {
                 ) : null}
               </ul>
             </div>
-            <ul
-              className={
-                isInboxActive ? styles.selectedInbox : styles.emptyInbox
-              }
-            >
-              {isInboxActive ? (
-                <li>Is Active alright</li>
-              ) : (
+            {isInboxActive ? (
+              <Inbox inboxid={activeInbox} />
+            ) : (
+              <ul className={styles.emptyInbox}>
+                (
                 <li className={styles.noSelection}>
                   <img className={styles.chatIcon} src={chatIcon} alt=""></img>
                 </li>
-              )}
-            </ul>
+                )
+              </ul>
+            )}
           </main>
         </div>
       )}
