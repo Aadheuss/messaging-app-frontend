@@ -81,42 +81,7 @@
 }
 
 .inboxes {
-  composes: inbox;
   border-right: 2px solid #e3e3e1;
-}
-
-.inboxItem {
-  padding: 0 1rem;
-}
-
-.inboxButton {
-  color: inherit;
-  font-family: inherit;
-  background-color: inherit;
-  width: 100%;
-  text-align: start;
-}
-
-.inboxButton:hover {
-  background-color: #d8d8d6;
-  border: none;
-}
-.inboxName {
-  font-weight: 700;
-  margin: 0;
-}
-
-.blockquote {
-  margin: 0;
-}
-
-.inboxMessage {
-  margin: 0;
-}
-
-.selectedInbox {
-  composes: inbox;
-  margin: 0;
 }
 
 .emptyInbox {
@@ -124,6 +89,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .chatIcon {
   width: 150px;
   height: auto;

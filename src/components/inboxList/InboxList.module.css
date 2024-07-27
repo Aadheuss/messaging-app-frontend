@@ -1,0 +1,42 @@
+.inboxList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.inboxItem {
+  padding: 0 1rem;
+}
+
+.inboxButton {
+  color: inherit;
+  font-family: inherit;
+  background-color: inherit;
+  width: 100%;
+  text-align: start;
+}
+
+.activeInbox {
+  composes: inboxButton;
+  background-color: #bcbcba;
+}
+
+.inboxButton:hover {
+  background-color: #d8d8d6;
+  border: none;
+}
+
+.inboxName {
+  font-weight: 700;
+  margin: 0;
+}
+
+.blockquote {
+  margin: 0;
+}
+
+.inboxMessage {
+  font-weight: 500;
+  margin: 0;
+}

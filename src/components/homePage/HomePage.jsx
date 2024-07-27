@@ -7,6 +7,7 @@ import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
 import chatIcon from "../../assets/images/chat.svg";
 import Inbox from "../inbox/Inbox";
+import InboxList from "../inboxList/InboxList";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -135,46 +136,19 @@ const HomePage = () => {
           <main className={styles.home}>
             <div className={styles.inboxes}>
               <h2 className={styles.inboxHeader}>Messages</h2>
-              <ul className={styles.inbox}>
-                {inboxes ? (
-                  inboxes.length > 0 ? (
-                    inboxes.map((inbox) => {
-                      return (
-                        <li className={styles.inboxItem} key={inbox.inbox._id}>
-                          <button
-                            className={styles.inboxButton}
-                            type="button"
-                            onClick={selectInbox.bind(this, inbox.inbox._id)}
-                          >
-                            <figure className={styles.inboxName}>
-                              <figcaption>
-                                {inbox.participants[0].user.username}
-                              </figcaption>
-                            </figure>
-                            <blockquote className={styles.blockquote}>
-                              <p className={styles.inboxMessage}>
-                                {inbox.inbox.last_message.message}
-                              </p>
-                            </blockquote>
-                          </button>
-                        </li>
-                      );
-                    })
-                  ) : (
-                    <li>No messages yet</li>
-                  )
-                ) : null}
-              </ul>
+              <InboxList
+                inboxList={inboxes}
+                activeInbox={activeInbox}
+                selectInbox={selectInbox}
+              />
             </div>
             {isInboxActive ? (
               <Inbox inboxid={activeInbox} />
             ) : (
               <ul className={styles.emptyInbox}>
-                (
-                <li className={styles.noSelection}>
+                <li>
                   <img className={styles.chatIcon} src={chatIcon} alt=""></img>
                 </li>
-                )
               </ul>
             )}
           </main>
