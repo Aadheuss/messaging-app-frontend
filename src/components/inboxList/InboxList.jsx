@@ -1,8 +1,11 @@
 import styles from "./InboxList.module.css";
-import { useState } from "react";
+import { useContext } from "react";
 import PropTypes from "prop-types";
+import { InboxListContext } from "../context/inboxListContext/inboxListContext";
 
-const InboxList = ({ inboxList, activeInbox, selectInbox }) => {
+const InboxList = ({ activeInbox, selectInbox }) => {
+  const { inboxList } = useContext(InboxListContext);
+
   function htmlDecode(input) {
     const doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
