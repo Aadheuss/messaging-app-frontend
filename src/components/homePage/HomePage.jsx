@@ -16,7 +16,7 @@ const HomePage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
-  const [inboxes, setInboxes] = useState(null);
+  const [inboxList, setInboxList] = useState(null);
   const [activeInbox, setActiveInbox] = useState(null);
   const [isInboxActive, setIsInboxActive] = useState(false);
 
@@ -76,9 +76,9 @@ const HomePage = () => {
             if (resInboxData.error) {
               console.log(resInboxData.error);
             } else {
-              const userInboxes =
+              const userInboxList =
                 resInboxData.inboxes.length > 0 ? resInboxData.inboxes : [];
-              setInboxes(userInboxes);
+              setInboxList(userInboxList);
             }
           }
         } catch (err) {
@@ -102,9 +102,7 @@ const HomePage = () => {
     <>
       {isLoading && <Loader />}
       {isMounted && (
-        <InboxListContext.Provider
-          value={{ inboxList: inboxes, setInboxList: setInboxes }}
-        >
+        <InboxListContext.Provider value={{ inboxList, setInboxList }}>
           <div className={styles.wrapper}>
             <header className={styles.header}>
               <h1 className={styles.logo}>
@@ -138,10 +136,9 @@ const HomePage = () => {
               </nav>
             </header>
             <main className={styles.home}>
-              <div className={styles.inboxes}>
+              <div className={styles.inboxList}>
                 <h2 className={styles.inboxHeader}>Messages</h2>
                 <InboxList
-                  inboxList={inboxes}
                   activeInbox={activeInbox}
                   selectInbox={selectInbox}
                 />
