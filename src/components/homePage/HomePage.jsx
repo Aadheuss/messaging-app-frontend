@@ -7,6 +7,7 @@ import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
 import chatIcon from "../../assets/images/chat.svg";
 import Inbox from "../inbox/Inbox";
+import { InboxListContext } from "../context/inboxListContext/inboxListContext";
 import InboxList from "../inboxList/InboxList";
 
 const HomePage = () => {
@@ -101,58 +102,66 @@ const HomePage = () => {
     <>
       {isLoading && <Loader />}
       {isMounted && (
-        <div className={styles.wrapper}>
-          <header className={styles.header}>
-            <h1 className={styles.logo}>
-              <a className={styles.logoLink} href="/">
-                msg<span className={styles.logoTxt}>Chat</span>
-              </a>
-            </h1>
-            <nav>
-              <ul className={styles.navList}>
-                <li className={styles.navItem}>
-                  <a className={styles.navItemLink} href="/profile">
-                    {userData && userData.username}
-                  </a>
-                </li>
-                <li className={styles.navItem}>
-                  <a
-                    className={styles.navItemLink}
-                    href="/logout"
-                    onClick={logout}
-                  >
+        <InboxListContext.Provider
+          value={{ inboxList: inboxes, setInboxList: setInboxes }}
+        >
+          <div className={styles.wrapper}>
+            <header className={styles.header}>
+              <h1 className={styles.logo}>
+                <a className={styles.logoLink} href="/">
+                  msg<span className={styles.logoTxt}>Chat</span>
+                </a>
+              </h1>
+              <nav>
+                <ul className={styles.navList}>
+                  <li className={styles.navItem}>
+                    <a className={styles.navItemLink} href="/profile">
+                      {userData && userData.username}
+                    </a>
+                  </li>
+                  <li className={styles.navItem}>
+                    <a
+                      className={styles.navItemLink}
+                      href="/logout"
+                      onClick={logout}
+                    >
+                      <img
+                        onMouseEnter={(e) => (e.target.src = logoutIconHover)}
+                        onMouseLeave={(e) => (e.target.src = logoutIcon)}
+                        className={styles.logoutIcon}
+                        src={logoutIcon}
+                        alt="logout"
+                      />
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+            <main className={styles.home}>
+              <div className={styles.inboxes}>
+                <h2 className={styles.inboxHeader}>Messages</h2>
+                <InboxList
+                  inboxList={inboxes}
+                  activeInbox={activeInbox}
+                  selectInbox={selectInbox}
+                />
+              </div>
+              {isInboxActive ? (
+                <Inbox inboxid={activeInbox} />
+              ) : (
+                <ul className={styles.emptyInbox}>
+                  <li>
                     <img
-                      onMouseEnter={(e) => (e.target.src = logoutIconHover)}
-                      onMouseLeave={(e) => (e.target.src = logoutIcon)}
-                      className={styles.logoutIcon}
-                      src={logoutIcon}
-                      alt="logout"
-                    />
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </header>
-          <main className={styles.home}>
-            <div className={styles.inboxes}>
-              <h2 className={styles.inboxHeader}>Messages</h2>
-              <InboxList
-                inboxList={inboxes}
-                activeInbox={activeInbox}
-                selectInbox={selectInbox}
-              />
-            </div>
-            {isInboxActive ? (
-              <Inbox inboxid={activeInbox} />
-            ) : (
-              <ul className={styles.emptyInbox}>
-                <li>
-                  <img className={styles.chatIcon} src={chatIcon} alt=""></img>
-                </li>
-              </ul>
-            )}
-          </main>
-        </div>
+                      className={styles.chatIcon}
+                      src={chatIcon}
+                      alt=""
+                    ></img>
+                  </li>
+                </ul>
+              )}
+            </main>
+          </div>
+        </InboxListContext.Provider>
       )}
     </>
   );

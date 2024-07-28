@@ -3,7 +3,6 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 const InboxList = ({ inboxList, activeInbox, selectInbox }) => {
-  console.log({ inboxList, activeInbox, selectInbox });
   function htmlDecode(input) {
     const doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;

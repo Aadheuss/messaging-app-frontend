@@ -59,6 +59,7 @@
 }
 
 .home {
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1.75fr;
   height: 100%;
