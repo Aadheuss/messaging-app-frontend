@@ -25,7 +25,7 @@ const InboxList = ({ activeInbox, selectInbox }) => {
                   onClick={selectInbox.bind(this, inbox.inbox._id)}
                 >
                   <figure className={styles.inboxName}>
-                    <figcaption>
+                    <figcaption className={styles.inboxNameText}>
                       {inbox.participants[0].user.username}
                     </figcaption>
                   </figure>

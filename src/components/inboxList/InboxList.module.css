@@ -32,12 +32,18 @@
   margin: 0;
 }
 
+.inboxNameText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .blockquote {
   margin: 0;
 }
 
 .inboxMessage {
-  max-width: 100%;
+  max-width: ;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
