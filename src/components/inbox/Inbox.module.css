@@ -81,6 +81,7 @@
 .text {
   text-align: start;
   max-width: 60ch;
+  overflow-wrap: break-word;
   font-size: 0.975em;
   font-weight: 500;
   padding: 0;
