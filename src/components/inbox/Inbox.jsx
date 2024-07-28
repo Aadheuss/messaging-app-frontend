@@ -51,6 +51,7 @@ const Inbox = ({ inboxid }) => {
 
   const sendMessage = async (e) => {
     setInputTxt("");
+    setRows(1);
     e.preventDefault();
 
     let formData = new URLSearchParams();
