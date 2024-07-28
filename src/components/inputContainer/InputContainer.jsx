@@ -1,6 +1,6 @@
 import styles from "./InputContainer.module.css";
 import PropTypes from "prop-types";
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import ErrMsgList from "../errMsgList/ErrMsgList";
 
 const InputContainer = ({
@@ -14,6 +14,7 @@ const InputContainer = ({
   autoComplete,
   text,
 }) => {
+  const inputRef = useRef(null);
   const [inputTxt, setInputTxt] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [wasInitiallyAutofilled, setWasInitiallyAutofilled] = useState(false);
@@ -27,9 +28,7 @@ const InputContainer = ({
      * it actually can have some value, so we should process this edge case in the form logic
      */
     const checkAutofilled = () => {
-      const autofilled = !!document
-        .getElementById(id)
-        ?.matches("*:-webkit-autofill");
+      const autofilled = inputRef.current.matches("*:-webkit-autofill");
       setWasInitiallyAutofilled(autofilled);
     };
 
@@ -74,6 +73,7 @@ const InputContainer = ({
           {text}
         </label>
         <input
+          ref={inputRef}
           className={isFocused ? styles.input : styles.inputHidden}
           onChange={monitorInput}
           onFocus={activateFocus}
