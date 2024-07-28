@@ -61,7 +61,7 @@
 .home {
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1.75fr;
+  grid-template-columns: min(75vw, calc(40ch + 5vw)) 1fr;
   height: 100%;
   padding: 0 clamp(0.25rem, calc(0.5rem + calc(0.25vw + 0.25vh)), 1.75rem)
     clamp(0.5rem, calc(0.75rem + calc(0.25vw + 0.25vh)), 2.5rem);

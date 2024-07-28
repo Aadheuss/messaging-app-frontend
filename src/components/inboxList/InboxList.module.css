@@ -37,6 +37,10 @@
 }
 
 .inboxMessage {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 0.975em;
   font-weight: 500;
   margin: 0;
