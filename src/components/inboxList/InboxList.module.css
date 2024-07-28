@@ -28,7 +28,7 @@
 }
 
 .inboxName {
-  font-weight: 700;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -37,6 +37,7 @@
 }
 
 .inboxMessage {
+  font-size: 0.975em;
   font-weight: 500;
   margin: 0;
 }
