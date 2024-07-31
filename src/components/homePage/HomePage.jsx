@@ -29,7 +29,7 @@ const HomePage = () => {
         credentials: "include",
       });
 
-      const resData = res.json();
+      const resData = await res.json();
 
       if (resData.error) {
         console.log(resData.error);
