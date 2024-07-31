@@ -3,7 +3,7 @@ import InputContainer from "../inputContainer/InputContainer";
 import Loader from "../loader/Loader";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext/UserContext";
+import { UserContext } from "../context/UserContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,15 +15,12 @@ const LoginPage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    const checkLogin = async () => {
-      if (user) {
-        navigate("/");
-      }
+    const startup = () => {
       setIsLoading(false);
       setIsMounted(true);
     };
 
-    checkLogin();
+    startup();
     //eslint-disable-next-line
   }, [user]);
 

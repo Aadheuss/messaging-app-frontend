@@ -1,19 +1,16 @@
 import styles from "./HomePage.module.css";
-import Loader from "../loader/Loader";
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../context/userContext/UserContext";
+import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
 import chatIcon from "../../assets/images/chat.svg";
 import Inbox from "../inbox/Inbox";
-import { InboxListContext } from "../context/inboxListContext/inboxListContext";
+import { InboxListContext } from "../context/InboxListContext";
 import InboxList from "../inboxList/InboxList";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
   const [inboxList, setInboxList] = useState(null);
@@ -21,7 +18,6 @@ const HomePage = () => {
   const [isInboxActive, setIsInboxActive] = useState(false);
 
   const logout = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
 
     try {
@@ -40,17 +36,13 @@ const HomePage = () => {
       }
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    setIsLoading(true);
     const checkLogin = async () => {
-      if (!user) {
-        navigate("/login");
-      } else {
+      console.log({ user, isUser: !!user });
+      if (user) {
         try {
           const id = user._id;
 
@@ -82,12 +74,10 @@ const HomePage = () => {
             }
           }
         } catch (err) {
+          console.log(err);
           navigate("/error");
         }
       }
-
-      setIsMounted(true);
-      setIsLoading(false);
     };
 
     checkLogin();
@@ -99,68 +89,56 @@ const HomePage = () => {
   };
 
   return (
-    <>
-      {isLoading && <Loader />}
-      {isMounted && (
-        <InboxListContext.Provider value={{ inboxList, setInboxList }}>
-          <div className={styles.wrapper}>
-            <header className={styles.header}>
-              <h1 className={styles.logo}>
-                <a className={styles.logoLink} href="/">
-                  msg<span className={styles.logoTxt}>Chat</span>
+    <InboxListContext.Provider value={{ inboxList, setInboxList }}>
+      <div className={styles.wrapper}>
+        <header className={styles.header}>
+          <h1 className={styles.logo}>
+            <a className={styles.logoLink} href="/">
+              msg<span className={styles.logoTxt}>Chat</span>
+            </a>
+          </h1>
+          <nav>
+            <ul className={styles.navList}>
+              <li className={styles.navItem}>
+                <a className={styles.navItemLink} href="/profile">
+                  {userData && userData.username}
                 </a>
-              </h1>
-              <nav>
-                <ul className={styles.navList}>
-                  <li className={styles.navItem}>
-                    <a className={styles.navItemLink} href="/profile">
-                      {userData && userData.username}
-                    </a>
-                  </li>
-                  <li className={styles.navItem}>
-                    <a
-                      className={styles.navItemLink}
-                      href="/logout"
-                      onClick={logout}
-                    >
-                      <img
-                        onMouseEnter={(e) => (e.target.src = logoutIconHover)}
-                        onMouseLeave={(e) => (e.target.src = logoutIcon)}
-                        className={styles.logoutIcon}
-                        src={logoutIcon}
-                        alt="logout"
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </header>
-            <main className={styles.home}>
-              <div className={styles.inboxList}>
-                <h2 className={styles.inboxHeader}>Messages</h2>
-                <InboxList
-                  activeInbox={activeInbox}
-                  selectInbox={selectInbox}
-                />
-              </div>
-              {isInboxActive ? (
-                <Inbox inboxid={activeInbox} />
-              ) : (
-                <ul className={styles.emptyInbox}>
-                  <li>
-                    <img
-                      className={styles.chatIcon}
-                      src={chatIcon}
-                      alt=""
-                    ></img>
-                  </li>
-                </ul>
-              )}
-            </main>
+              </li>
+              <li className={styles.navItem}>
+                <a
+                  className={styles.navItemLink}
+                  href="/logout"
+                  onClick={logout}
+                >
+                  <img
+                    onMouseEnter={(e) => (e.target.src = logoutIconHover)}
+                    onMouseLeave={(e) => (e.target.src = logoutIcon)}
+                    className={styles.logoutIcon}
+                    src={logoutIcon}
+                    alt="logout"
+                  />
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <main className={styles.home}>
+          <div className={styles.inboxList}>
+            <h2 className={styles.inboxHeader}>Messages</h2>
+            <InboxList activeInbox={activeInbox} selectInbox={selectInbox} />
           </div>
-        </InboxListContext.Provider>
-      )}
-    </>
+          {isInboxActive ? (
+            <Inbox inboxid={activeInbox} />
+          ) : (
+            <ul className={styles.emptyInbox}>
+              <li>
+                <img className={styles.chatIcon} src={chatIcon} alt=""></img>
+              </li>
+            </ul>
+          )}
+        </main>
+      </div>
+    </InboxListContext.Provider>
   );
 };
 

@@ -4,13 +4,22 @@ import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage
 import NotFoundErrPage from "../components/notFoundErrPage/NotFoundErrPage";
 import LoginPage from "../components/loginPage/LoginPage";
 import HomePage from "../components/homePage/HomePage";
+import { isAuthenticated } from "../utils/authentication";
+import { Navigate } from "react-router-dom";
 
 const routes = [
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "", element: <HomePage /> },
+      {
+        path: "",
+        element: (await isAuthenticated()) ? (
+          <HomePage />
+        ) : (
+          <Navigate to="/login" />
+        ),
+      },
 
       {
         path: "signup",
@@ -18,7 +27,11 @@ const routes = [
       },
       {
         path: "login",
-        element: <LoginPage />,
+        element: (await isAuthenticated()) ? (
+          <Navigate to="/" />
+        ) : (
+          <LoginPage />
+        ),
       },
       {
         path: "error",
