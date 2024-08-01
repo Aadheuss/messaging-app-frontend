@@ -1,0 +1,36 @@
+.inboxes {
+  display: grid;
+  grid-template-columns: min(75vw, calc(40ch + 5vw)) 1fr;
+  padding: 0 clamp(0.25rem, calc(0.5rem + calc(0.25vw + 0.25vh)), 1.75rem)
+    clamp(0.5rem, calc(0.75rem + calc(0.25vw + 0.25vh)), 2.5rem);
+  flex-grow: 1;
+}
+
+.inboxHeader {
+  margin: 0;
+  background-color: #e3e3e1;
+  text-align: start;
+  padding: 0.5rem 1rem;
+}
+
+.inbox {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.inboxList {
+  border-right: 2px solid #e3e3e1;
+}
+
+.emptyInbox {
+  composes: inbox;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatIcon {
+  width: 150px;
+  height: auto;
+}

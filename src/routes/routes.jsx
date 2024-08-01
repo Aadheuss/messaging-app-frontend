@@ -6,6 +6,7 @@ import LoginPage from "../components/loginPage/LoginPage";
 import HomePage from "../components/homePage/HomePage";
 import { isAuthenticated } from "../utils/authentication";
 import { Navigate } from "react-router-dom";
+import Inboxes from "../components/inboxes/Inboxes";
 
 const routes = [
   {
@@ -19,6 +20,12 @@ const routes = [
         ) : (
           <Navigate to="/login" />
         ),
+        children: [
+          {
+            path: "/inboxes",
+            element: <Inboxes />,
+          },
+        ],
       },
 
       {
