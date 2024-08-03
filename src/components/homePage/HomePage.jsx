@@ -1,5 +1,5 @@
 import styles from "./HomePage.module.css";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Nav from "../nav/Nav";
 
 const HomePage = () => {
@@ -7,9 +7,9 @@ const HomePage = () => {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <h1 className={styles.logo}>
-          <a className={styles.logoLink} href="/">
+          <Link className={styles.logoLink} href="/">
             msg<span className={styles.logoTxt}>Chat</span>
-          </a>
+          </Link>
         </h1>
         <Nav />
       </header>
