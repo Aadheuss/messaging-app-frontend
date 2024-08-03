@@ -35,12 +35,17 @@ const Nav = () => {
     <nav>
       <ul className={styles.navList}>
         <li className={styles.navItem}>
+          <Link className={styles.navItemLink} to="/inboxes">
+            inbox
+          </Link>
+        </li>
+        <li className={styles.navItem}>
           <Link className={styles.navItemLink} to="/profile">
             {user && user.username}
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link className={styles.navItemLink} href="/logout" onClick={logout}>
+          <Link className={styles.navItemLink} to="/logout" onClick={logout}>
             <img
               onMouseEnter={(e) => (e.target.src = logoutIconHover)}
               onMouseLeave={(e) => (e.target.src = logoutIcon)}
