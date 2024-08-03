@@ -34,30 +34,6 @@
   color: #9dd70b;
 }
 
-.navList {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  list-style: none;
-  padding: 0;
-}
-
-.navItem {
-  font-weight: 700;
-  color: #213547;
-  transition: 0.1s ease-out;
-}
-
-.navItem:hover {
-  color: #88ba0a;
-  transform: scale(1.05);
-  text-shadow: 0 0 5px var(#88ba0a);
-}
-
-.navItemLink {
-  composes: navItem;
-}
-
 .home {
   height: 100%;
   display: flex;

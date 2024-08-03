@@ -7,15 +7,34 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const checkCurrentUser = async () => {
+    const fetchUser = async () => {
       const currentUser = JSON.parse(window.localStorage.getItem("user"));
 
       if (currentUser) {
-        setUser(currentUser);
+        try {
+          const id = currentUser._id;
+
+          const res = await fetch(`http://localhost:3000/user/${id}`, {
+            credentials: "include",
+          });
+
+          const resData = await res.json();
+
+          if (resData.error) {
+            if (resData.error.status >= 400 && resData.error.status < 500) {
+              window.localStorage.removeItem("user");
+              setUser(null);
+            }
+          } else {
+            setUser(resData.data.user);
+          }
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
 
-    checkCurrentUser();
+    fetchUser();
   }, []);
 
   return (
