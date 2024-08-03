@@ -1,22 +1,20 @@
 import styles from "./Inboxes.module.css";
 import InboxList from "../inboxList/InboxList";
 import chatIcon from "../../assets/images/chat.svg";
-import Inbox from "../inbox/Inbox";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { InboxListContext } from "../context/InboxListContext";
-import { Await, defer, useLoaderData } from "react-router-dom";
+import {
+  Await,
+  defer,
+  Outlet,
+  useLoaderData,
+  useParams,
+} from "react-router-dom";
 import Loader from "../loader/Loader";
 
 const Inboxes = () => {
   const { inboxes } = useLoaderData();
-  const [inboxList, setInboxList] = useState(null);
-  const [activeInbox, setActiveInbox] = useState(null);
-  const [isInboxActive, setIsInboxActive] = useState(false);
-
-  const selectInbox = (inboxid) => {
-    setActiveInbox(inboxid);
-    setIsInboxActive(true);
-  };
+  const { inboxid } = useParams();
 
   return (
     <Suspense fallback={<Loader />}>
@@ -25,19 +23,15 @@ const Inboxes = () => {
         errorElement={<p>Error loading package location!</p>}
       >
         {(inboxes) => (
-          <InboxListContext.Provider
-            value={{ inboxList: inboxes, setInboxList }}
-          >
+          <InboxListContext.Provider value={{ inboxList: inboxes }}>
             <div className={styles.inboxes}>
               <div className={styles.inboxList}>
                 <h2 className={styles.inboxHeader}>Messages</h2>
-                <InboxList
-                  activeInbox={activeInbox}
-                  selectInbox={selectInbox}
-                />
+                <InboxList activeInbox={inboxid} />
               </div>
-              {isInboxActive ? (
-                <Inbox inboxid={activeInbox} />
+
+              {inboxid ? (
+                <Outlet />
               ) : (
                 <ul className={styles.emptyInbox}>
                   <li>

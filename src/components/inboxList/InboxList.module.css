@@ -9,7 +9,7 @@
   padding: 0 1rem;
 }
 
-.inboxButton {
+.inboxLink {
   color: inherit;
   font-family: inherit;
   background-color: inherit;
@@ -17,14 +17,19 @@
   text-align: start;
 }
 
+.inboxLink:hover {
+  color: inherit;
+  background-color: #d8d8d6;
+  border: none;
+}
+
+.inboxButton {
+  composes: inboxLink;
+}
+
 .activeInbox {
   composes: inboxButton;
   background-color: #bcbcba;
-}
-
-.inboxButton:hover {
-  background-color: #d8d8d6;
-  border: none;
 }
 
 .inboxName {

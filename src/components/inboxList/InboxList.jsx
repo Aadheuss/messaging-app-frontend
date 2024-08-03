@@ -1,10 +1,11 @@
 import styles from "./InboxList.module.css";
 import { useContext } from "react";
-import PropTypes from "prop-types";
 import { InboxListContext } from "../context/InboxListContext";
+import { Link, useParams } from "react-router-dom";
 
-const InboxList = ({ activeInbox, selectInbox }) => {
+const InboxList = () => {
   const { inboxList } = useContext(InboxListContext);
+  const { inboxid } = useParams();
 
   function htmlDecode(input) {
     const doc = new DOMParser().parseFromString(input, "text/html");
@@ -16,25 +17,28 @@ const InboxList = ({ activeInbox, selectInbox }) => {
       {inboxList ? (
         inboxList.length > 0 ? (
           inboxList.map((inbox) => {
-            const isActive = inbox.inbox._id === activeInbox;
+            const isActive = inbox.inbox._id === inboxid;
             return (
               <li className={styles.inboxItem} key={inbox.inbox._id}>
-                <button
-                  className={isActive ? styles.activeInbox : styles.inboxButton}
-                  type="button"
-                  onClick={selectInbox.bind(this, inbox.inbox._id)}
-                >
-                  <figure className={styles.inboxName}>
-                    <figcaption className={styles.inboxNameText}>
-                      {inbox.participants[0].user.username}
-                    </figcaption>
-                  </figure>
-                  <blockquote className={styles.blockquote}>
-                    <p className={styles.inboxMessage}>
-                      {htmlDecode(inbox.inbox.last_message.message)}
-                    </p>
-                  </blockquote>
-                </button>
+                <Link className={styles.inboxLink} to={`${inbox.inbox._id}`}>
+                  <button
+                    className={
+                      isActive ? styles.activeInbox : styles.inboxButton
+                    }
+                    type="button"
+                  >
+                    <figure className={styles.inboxName}>
+                      <figcaption className={styles.inboxNameText}>
+                        {inbox.participants[0].user.username}
+                      </figcaption>
+                    </figure>
+                    <blockquote className={styles.blockquote}>
+                      <p className={styles.inboxMessage}>
+                        {htmlDecode(inbox.inbox.last_message.message)}
+                      </p>
+                    </blockquote>
+                  </button>
+                </Link>
               </li>
             );
           })
@@ -44,12 +48,6 @@ const InboxList = ({ activeInbox, selectInbox }) => {
       ) : null}
     </ul>
   );
-};
-
-InboxList.propTypes = {
-  inboxList: PropTypes.arrayOf(PropTypes.object),
-  activeInbox: PropTypes.string,
-  selectInbox: PropTypes.func,
 };
 
 export default InboxList;

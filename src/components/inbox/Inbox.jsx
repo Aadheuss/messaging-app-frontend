@@ -1,104 +1,36 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext, Suspense } from "react";
 import styles from "./Inbox.module.css";
-import PropTypes from "prop-types";
 import { UserContext } from "../context/UserContext";
 import Loader from "../loader/Loader";
 import sendIcon from "../../assets/images/send.svg";
-import { useNavigate } from "react-router-dom";
-import { InboxListContext } from "../context/InboxListContext";
+import { Await, defer, Form, useLoaderData, useParams } from "react-router-dom";
 
-const Inbox = ({ inboxid }) => {
-  const { inboxList, setInboxList } = useContext(InboxListContext);
-  const navigate = useNavigate();
+const Inbox = () => {
   const [rows, setRows] = useState(1);
   const [inputTxt, setInputTxt] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
-  const [inbox, setInbox] = useState(null);
+  const { inbox } = useLoaderData();
+  const { inboxid } = useParams();
 
   function htmlDecode(input) {
     const doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
   }
 
-  useEffect(() => {
-    const fetchInbox = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`http://localhost:3000/user/inbox/${inboxid}`, {
-          credentials: "include",
-        });
-
-        const resData = await res.json();
-
-        if (resData.error) {
-          console.log(resData.error);
-        } else {
-          setInbox(resData.inbox);
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchInbox();
-
-    return setInbox(null);
-  }, [inboxid]);
-
-  const sendMessage = async (e) => {
-    setInputTxt("");
+  const resetInput = () => {
     setRows(1);
-    e.preventDefault();
+    setInputTxt("");
+  };
 
-    let formData = new URLSearchParams();
-    formData.append("message", inputTxt);
-
-    const currentInbox = inboxList.find((inbox) => inbox.inbox._id === inboxid);
-    const currentInboxIndex = inboxList.findIndex(
-      (inbox) => inbox.inbox._id === inboxid
-    );
-
+  const submitForm = async (e) => {
     if (!inputTxt) {
+      e.preventDefault();
+      console.log("Prevented from sending an empty message");
       return;
     }
 
-    try {
-      const res = await fetch(
-        `http://localhost:3000/user/inbox/${inboxid}/message`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          credentials: "include",
-          body: formData,
-        }
-      );
-
-      const resData = await res.json();
-
-      if (resData.error) {
-        console.log(resData.error);
-      } else {
-        const updatedInboxList = [...inboxList];
-        const updatedInbox = {
-          ...currentInbox,
-          inbox: resData.data.inbox,
-        };
-        updatedInboxList[currentInboxIndex] = updatedInbox;
-        setInboxList(updatedInboxList);
-        setInbox([...inbox, resData.data.inbox.last_message]);
-      }
-    } catch (err) {
-      console.log(err);
-      navigate("/error");
-    } finally {
-      setIsLoading(false);
-    }
+    resetInput();
   };
 
   const monitorInput = (e) => {
@@ -137,59 +69,112 @@ const Inbox = ({ inboxid }) => {
   };
 
   return (
-    <div className={styles.inboxWrapper}>
-      {isLoading && <Loader type="dots" />}
-      <ul className={styles.inbox}>
-        {inbox &&
-          inbox.map((message) => {
-            const isUser = message.user._id.toString() === user._id;
-            return (
-              <li
-                className={isUser ? styles.messageUser : styles.message}
-                key={message._id}
-              >
-                <p className={styles.text}>{htmlDecode(message.message)}</p>
-              </li>
-            );
-          })}
-      </ul>
-      <form
-        className={styles.messageBox}
-        id={`inbox-${inboxid}`}
-        action=""
-        method="post"
-      >
-        <div className={styles.inputContainer}>
-          <label
-            className={
-              inputTxt || isFocused ? styles.labelHidden : styles.label
-            }
-            htmlFor="message"
-          >
-            Message
-          </label>
-          <textarea
-            rows={rows}
-            id="message"
-            name="message"
-            onFocus={activateFocus}
-            onBlur={deactivateFocus}
-            onChange={monitorInput}
-            className={styles.textarea}
-            value={inputTxt}
-          ></textarea>
+    <Suspense>
+      <Await fallback={<Loader type="dots" />} resolve={inbox}>
+        {(inbox) => (
+          <div className={styles.inboxWrapper}>
+            <ul className={styles.inbox}>
+              {inbox &&
+                inbox.map((message) => {
+                  const isUser = message.user._id.toString() === user._id;
+                  return (
+                    <li
+                      className={isUser ? styles.messageUser : styles.message}
+                      key={message._id}
+                    >
+                      <p className={styles.text}>
+                        {htmlDecode(message.message)}
+                      </p>
+                    </li>
+                  );
+                })}
+            </ul>
+            <Form
+              className={styles.messageBox}
+              onSubmit={submitForm}
+              id={`inbox-${inboxid}`}
+              method="post"
+              onReset={resetInput}
+            >
+              <div className={styles.inputContainer}>
+                <label
+                  className={
+                    inputTxt || isFocused ? styles.labelHidden : styles.label
+                  }
+                  htmlFor="message"
+                >
+                  Message
+                </label>
+                <textarea
+                  rows={rows}
+                  id="message"
+                  name="message"
+                  onFocus={activateFocus}
+                  onBlur={deactivateFocus}
+                  onChange={monitorInput}
+                  className={styles.textarea}
+                  value={inputTxt}
+                ></textarea>
 
-          <button onClick={sendMessage} className={styles.msgButton}>
-            <img className={styles.icon} src={sendIcon} alt="send"></img>
-          </button>
-        </div>
-      </form>
-    </div>
+                <button className={styles.msgButton} type="submit">
+                  <img className={styles.icon} src={sendIcon} alt="send"></img>
+                </button>
+              </div>
+            </Form>
+          </div>
+        )}
+      </Await>
+    </Suspense>
   );
 };
 
-Inbox.propTypes = {
-  inboxid: PropTypes.string,
+export default Inbox;
+
+const InboxLoader = ({ params }) => {
+  const inbox = fetch(`http://localhost:3000/user/inbox/${params.inboxid}`, {
+    credentials: "include",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      return data.inbox;
+    });
+
+  return defer({ inbox });
 };
 
-export default Inbox;
+const InboxAction = async ({ request, params }) => {
+  const inboxid = params.inboxid;
+  const requestFormData = await request.formData();
+  const message = requestFormData.get("message");
+
+  let formData = new URLSearchParams();
+  formData.append("message", message);
+
+  const res = await fetch(
+    `http://localhost:3000/user/inbox/${inboxid}/message`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      credentials: "include",
+      body: formData,
+    }
+  );
+
+  const resData = await res.json();
+
+  if (resData.error) {
+    throw new Error(resData.error);
+  }
+
+  const inbox = resData.data.inbox;
+
+  return { inbox };
+};
+
+export { InboxLoader, InboxAction };

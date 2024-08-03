@@ -7,6 +7,7 @@ import HomePage from "../components/homePage/HomePage";
 import { isAuthenticated } from "../utils/authentication";
 import { Navigate } from "react-router-dom";
 import Inboxes, { InboxesLoader } from "../components/inboxes/Inboxes";
+import Inbox, { InboxAction, InboxLoader } from "../components/inbox/Inbox";
 
 const routes = [
   {
@@ -25,6 +26,15 @@ const routes = [
             path: "/inboxes",
             element: <Inboxes />,
             loader: InboxesLoader,
+            children: [
+              {
+                path: ":inboxid",
+                element: <Inbox />,
+                loader: InboxLoader,
+                action: InboxAction,
+              },
+            ],
+            errorElement: <ConnectionErrPage />,
           },
         ],
       },
