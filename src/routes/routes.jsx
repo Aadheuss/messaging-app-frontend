@@ -6,7 +6,7 @@ import LoginPage from "../components/loginPage/LoginPage";
 import HomePage from "../components/homePage/HomePage";
 import { isAuthenticated } from "../utils/authentication";
 import { Navigate } from "react-router-dom";
-import Inboxes from "../components/inboxes/Inboxes";
+import Inboxes, { InboxesLoader } from "../components/inboxes/Inboxes";
 
 const routes = [
   {
@@ -24,6 +24,7 @@ const routes = [
           {
             path: "/inboxes",
             element: <Inboxes />,
+            loader: InboxesLoader,
           },
         ],
       },
