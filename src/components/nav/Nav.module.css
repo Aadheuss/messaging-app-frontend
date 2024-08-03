@@ -1,12 +1,15 @@
 .navList {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 1rem;
   list-style: none;
   padding: 0;
 }
 
 .navItem {
+  display: flex;
+  align-items: center;
   font-weight: 700;
   color: #213547;
   transition: 0.1s ease-out;
