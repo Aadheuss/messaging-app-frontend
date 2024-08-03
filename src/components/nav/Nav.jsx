@@ -3,7 +3,7 @@ import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const { user, setUser } = useContext(UserContext);
@@ -35,12 +35,12 @@ const Nav = () => {
     <nav>
       <ul className={styles.navList}>
         <li className={styles.navItem}>
-          <a className={styles.navItemLink} href="/profile">
+          <Link className={styles.navItemLink} to="/profile">
             {user && user.username}
-          </a>
+          </Link>
         </li>
         <li className={styles.navItem}>
-          <a className={styles.navItemLink} href="/logout" onClick={logout}>
+          <Link className={styles.navItemLink} href="/logout" onClick={logout}>
             <img
               onMouseEnter={(e) => (e.target.src = logoutIconHover)}
               onMouseLeave={(e) => (e.target.src = logoutIcon)}
@@ -48,7 +48,7 @@ const Nav = () => {
               src={logoutIcon}
               alt="logout"
             />
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
