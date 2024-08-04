@@ -1,8 +1,23 @@
 import styles from "./HomePage.module.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Nav from "../nav/Nav";
+import { useEffect } from "react";
+import { isAuthenticated } from "../../utils/authentication";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const isUser = await isAuthenticated();
+      if (!isUser) {
+        navigate("/login");
+      }
+    };
+
+    checkUser();
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>

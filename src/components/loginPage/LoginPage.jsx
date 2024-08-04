@@ -4,25 +4,30 @@ import Loader from "../loader/Loader";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { isAuthenticated } from "../../utils/authentication";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
 
-    const startup = () => {
+    const startup = async () => {
+      const isUser = await isAuthenticated();
       setIsLoading(false);
       setIsMounted(true);
+
+      if (isUser) {
+        navigate("/");
+      }
     };
 
     startup();
-    //eslint-disable-next-line
-  }, [user]);
+  }, []);
 
   const submitForm = async (e) => {
     e.preventDefault();

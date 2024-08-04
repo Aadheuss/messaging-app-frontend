@@ -4,8 +4,6 @@ import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage
 import NotFoundErrPage from "../components/notFoundErrPage/NotFoundErrPage";
 import LoginPage from "../components/loginPage/LoginPage";
 import HomePage from "../components/homePage/HomePage";
-import { isAuthenticated } from "../utils/authentication";
-import { Navigate } from "react-router-dom";
 import Inboxes, { InboxesLoader } from "../components/inboxes/Inboxes";
 import Inbox, { InboxAction, InboxLoader } from "../components/inbox/Inbox";
 
@@ -16,11 +14,7 @@ const routes = [
     children: [
       {
         path: "",
-        element: (await isAuthenticated()) ? (
-          <HomePage />
-        ) : (
-          <Navigate to="/login" />
-        ),
+        element: <HomePage />,
         children: [
           {
             path: "/inboxes",
@@ -45,11 +39,7 @@ const routes = [
       },
       {
         path: "login",
-        element: (await isAuthenticated()) ? (
-          <Navigate to="/" />
-        ) : (
-          <LoginPage />
-        ),
+        element: <LoginPage />,
       },
       {
         path: "error",

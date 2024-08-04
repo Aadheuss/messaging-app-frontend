@@ -25,6 +25,7 @@ const Nav = () => {
         window.localStorage.removeItem("user");
         setUser(null);
         navigate("/login");
+        console.log("navigating to login...");
       }
     } catch (err) {
       console.log(err);
