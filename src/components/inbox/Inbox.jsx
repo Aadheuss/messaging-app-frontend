@@ -69,8 +69,14 @@ const Inbox = () => {
   };
 
   return (
-    <Suspense>
-      <Await fallback={<Loader type="dots" />} resolve={inbox}>
+    <Suspense
+      fallback={
+        <div className={styles.inboxWrapper}>
+          <Loader type="dots" />
+        </div>
+      }
+    >
+      <Await resolve={inbox}>
         {(inbox) => (
           <div className={styles.inboxWrapper}>
             <ul className={styles.inbox}>
@@ -135,12 +141,12 @@ const InboxLoader = ({ params }) => {
     credentials: "include",
   })
     .then((res) => res.json())
-    .then((data) => {
-      if (data.error) {
-        throw new Error(data.error);
+    .then((res) => {
+      if (res.error) {
+        throw new Error(res.error);
       }
 
-      return data.inbox;
+      return res.inbox;
     });
 
   return defer({ inbox });
