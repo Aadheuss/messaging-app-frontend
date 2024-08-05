@@ -1,7 +1,37 @@
 import { Suspense } from "react";
 import styles from "./InboxList.module.css";
 import { Await, Link, useLoaderData, useParams } from "react-router-dom";
-import Loader from "../loader/Loader";
+import ContentLoader from "react-content-loader";
+
+const InboxListcontentLoader = (props) => (
+  <ContentLoader
+    speed={2}
+    width={"calc(100% - 2rem)"}
+    height={300}
+    viewBox="0 0 100% 200"
+    backgroundColor="#e3e3e1"
+    foregroundColor="#A9A9A8"
+    {...props}
+  >
+    <rect x="0" y="1.5rem" rx="5" ry="5" width="100%" height="1.5em" />
+    <rect
+      x="0"
+      y="calc(3rem + 1.5em)"
+      rx="5"
+      ry="5"
+      width="100%"
+      height="1.5em"
+    />
+    <rect
+      x="0"
+      y="calc(4.5rem + 3em)"
+      rx="5"
+      ry="5"
+      width="100%"
+      height="1.5em"
+    />
+  </ContentLoader>
+);
 
 const InboxList = () => {
   const { inboxes } = useLoaderData();
@@ -13,7 +43,7 @@ const InboxList = () => {
   }
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<InboxListcontentLoader />}>
       <Await resolve={inboxes}>
         {(inboxes) => {
           const inboxList = inboxes;
