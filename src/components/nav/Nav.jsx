@@ -42,7 +42,7 @@ const Nav = () => {
         </li>
         <li className={styles.navItem}>
           <Link className={styles.navItemLink} to="/profile">
-            {user && user.username}
+            {user ? user.username : "User"}
           </Link>
         </li>
         <li className={styles.navItem}>
