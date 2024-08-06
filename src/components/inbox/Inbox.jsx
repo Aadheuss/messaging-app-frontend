@@ -98,6 +98,7 @@ const Inbox = () => {
           <div className={styles.inboxWrapper}>
             <ul className={styles.inbox}>
               {inbox &&
+                user &&
                 inbox.map((message) => {
                   const isUser = message.user._id.toString() === user._id;
                   return (
