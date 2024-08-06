@@ -3,9 +3,17 @@ import styles from "./Inbox.module.css";
 import { UserContext } from "../context/UserContext";
 import Loader from "../loader/Loader";
 import sendIcon from "../../assets/images/send.svg";
-import { Await, defer, Form, useLoaderData, useParams } from "react-router-dom";
+import {
+  Await,
+  defer,
+  Form,
+  useLoaderData,
+  useNavigation,
+  useParams,
+} from "react-router-dom";
 
 const Inbox = () => {
+  const { state } = useNavigation();
   const [rows, setRows] = useState(1);
   const [inputTxt, setInputTxt] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -122,9 +130,33 @@ const Inbox = () => {
                   value={inputTxt}
                 ></textarea>
 
-                <button className={styles.msgButton} type="submit">
-                  <img className={styles.icon} src={sendIcon} alt="send"></img>
-                </button>
+                {state === "idle" ? (
+                  <button className={styles.msgButton} type="submit">
+                    <img
+                      className={styles.icon}
+                      src={sendIcon}
+                      alt="send"
+                    ></img>
+                  </button>
+                ) : (
+                  <div
+                    className={styles.msgButton}
+                    style={{
+                      width: "1.5em",
+                      height: "1.5em",
+                      padding: "0.6em 1.2em",
+                      borderRadius: "8px",
+                    }}
+                    type="submit"
+                  >
+                    <Loader
+                      type="spinner"
+                      size="1.5em"
+                      colorOne={"#f4f4f2"}
+                      colorTwo={"#213547"}
+                    />
+                  </div>
+                )}
               </div>
             </Form>
           </div>

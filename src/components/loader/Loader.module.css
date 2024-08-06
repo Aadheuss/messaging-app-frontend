@@ -1,3 +1,8 @@
+:root {
+  --color: #0000;
+  --color-1: #213547;
+}
+
 .loaderContainer {
   z-index: 3;
   position: absolute;
@@ -12,7 +17,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: conic-gradient(#0000 10%, #213547) content-box;
+  background: conic-gradient(var(--color) 10%, var(--color-1)) content-box;
   -webkit-mask: repeating-conic-gradient(
       #0000 0deg,
       #000 1deg 20deg,
