@@ -14,8 +14,7 @@ const isAuthenticated = async () => {
       isAuthenticated = true;
     }
   } catch (err) {
-    console.log("server error");
-    console.log(err);
+    throw new Error("Server Error");
   }
 
   return isAuthenticated;

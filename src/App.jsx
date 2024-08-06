@@ -36,7 +36,7 @@ function App() {
               setUser(resData.data.user);
             }
           } catch (err) {
-            console.log(err);
+            console.log("Server Error");
           }
         }
       }

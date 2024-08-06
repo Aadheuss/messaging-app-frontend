@@ -9,9 +9,14 @@ const HomePage = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-      const isUser = await isAuthenticated();
-      if (!isUser) {
-        navigate("/login");
+      try {
+        const isUser = await isAuthenticated();
+        if (!isUser) {
+          navigate("/login");
+        }
+      } catch (err) {
+        console.log(err);
+        navigate("/error");
       }
     };
 

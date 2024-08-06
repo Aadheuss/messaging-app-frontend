@@ -17,12 +17,18 @@ const LoginPage = () => {
     setIsLoading(true);
 
     const startup = async () => {
-      const isUser = await isAuthenticated();
-      setIsLoading(false);
-      setIsMounted(true);
+      try {
+        const isUser = await isAuthenticated();
 
-      if (isUser) {
-        navigate("/");
+        if (isUser) {
+          navigate("/");
+        }
+      } catch (err) {
+        console.log(err);
+        navigate("/error");
+      } finally {
+        setIsLoading(false);
+        setIsMounted(true);
       }
     };
 
