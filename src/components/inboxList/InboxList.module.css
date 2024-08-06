@@ -55,3 +55,7 @@
   font-weight: 500;
   margin: 0;
 }
+
+.loaderWrapper {
+  padding: 1.5rem 1rem;
+}

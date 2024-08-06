@@ -6,30 +6,24 @@ import ContentLoader from "react-content-loader";
 const InboxListcontentLoader = (props) => (
   <ContentLoader
     speed={2}
-    width={"calc(100% - 2rem)"}
-    height={300}
-    viewBox="0 0 100% 200"
+    width={"100%"}
+    height={150}
     backgroundColor="#e3e3e1"
     foregroundColor="#A9A9A8"
+    viewBox="0 0 250 150"
+    preserveAspectRatio="none"
     {...props}
   >
-    <rect x="0" y="1.5rem" rx="5" ry="5" width="100%" height="1.5em" />
+    <rect x="0" y="0" rx="5" ry="5" width="100%" height="1.5em" />
     <rect
       x="0"
-      y="calc(3rem + 1.5em)"
+      y="calc(1.5em + 1.5em)"
       rx="5"
       ry="5"
       width="100%"
       height="1.5em"
     />
-    <rect
-      x="0"
-      y="calc(4.5rem + 3em)"
-      rx="5"
-      ry="5"
-      width="100%"
-      height="1.5em"
-    />
+    <rect x="0" y="calc(3em + 3em)" rx="5" ry="5" width="100%" height="1.5em" />
   </ContentLoader>
 );
 
@@ -43,7 +37,13 @@ const InboxList = () => {
   }
 
   return (
-    <Suspense fallback={<InboxListcontentLoader />}>
+    <Suspense
+      fallback={
+        <div className={styles.loaderWrapper}>
+          <InboxListcontentLoader />
+        </div>
+      }
+    >
       <Await resolve={inboxes}>
         {(inboxes) => {
           const inboxList = inboxes;
