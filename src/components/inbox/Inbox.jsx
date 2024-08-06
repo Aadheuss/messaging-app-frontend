@@ -1,4 +1,4 @@
-import { useState, useContext, Suspense } from "react";
+import { useState, useContext, Suspense, useCallback } from "react";
 import styles from "./Inbox.module.css";
 import { UserContext } from "../context/UserContext";
 import Loader from "../loader/Loader";
@@ -20,6 +20,15 @@ const Inbox = () => {
   const { user } = useContext(UserContext);
   const { inbox } = useLoaderData();
   const { inboxid } = useParams();
+
+  const inboxRef = useCallback(
+    (el) => {
+      if (el !== null) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    [inbox]
+  );
 
   function htmlDecode(input) {
     const doc = new DOMParser().parseFromString(input, "text/html");
@@ -102,6 +111,7 @@ const Inbox = () => {
                     </li>
                   );
                 })}
+              <div ref={inboxRef}></div>
             </ul>
             <Form
               className={styles.messageBox}
