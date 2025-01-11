@@ -1,6 +1,6 @@
-import styles from "./HomePage.module.css";
+import styles from "./Homepage.module.css";
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../components/context/UserContext";
 import { Outlet, useNavigate } from "react-router-dom";
 import logoutIcon from "../../assets/images/logout.svg";
 import logoutIconHover from "../../assets/images/logout_hover.svg";
