@@ -1,9 +1,9 @@
 import App from "../App";
+import HomePage from "../pages/homePage/HomePage";
 import SignupPage from "../components/signupPage/SignupPage";
 import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage";
 import NotFoundErrPage from "../components/notFoundErrPage/NotFoundErrPage";
 import LoginPage from "../components/loginPage/LoginPage";
-import HomePage from "../components/homePage/HomePage";
 import { isAuthenticated } from "../utils/authentication";
 import { Navigate } from "react-router-dom";
 import Inboxes from "../components/inboxes/Inboxes";
@@ -14,12 +14,8 @@ const routes = [
     element: <App />,
     children: [
       {
-        path: "",
-        element: (await isAuthenticated()) ? (
-          <HomePage />
-        ) : (
-          <Navigate to="/login" />
-        ),
+        path: "user",
+        element: <HomePage />,
         children: [
           {
             path: "/inboxes",

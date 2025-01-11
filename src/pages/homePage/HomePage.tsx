@@ -32,37 +32,37 @@ const HomePage = () => {
     }
   };
 
-  useEffect(() => {
-    const checkLogin = async () => {
-      console.log({ user, isUser: !!user });
-      if (user) {
-        try {
-          const id = user._id;
+  // useEffect(() => {
+  //   const checkLogin = async () => {
+  //     console.log({ user, isUser: !!user });
+  //     if (user) {
+  //       try {
+  //         const id = user._id;
 
-          const res = await fetch(`http://localhost:3000/user/${id}`, {
-            credentials: "include",
-          });
+  //         const res = await fetch(`http://localhost:3000/user/${id}`, {
+  //           credentials: "include",
+  //         });
 
-          const resData = await res.json();
+  //         const resData = await res.json();
 
-          if (resData.error) {
-            if (resData.error.status >= 400 && resData.error.status < 500) {
-              window.localStorage.removeItem("user");
-              setUser(null);
-              navigate("/login");
-            }
-          } else {
-            setUserData(resData.data.user);
-          }
-        } catch (err) {
-          console.log(err);
-          navigate("/error");
-        }
-      }
-    };
+  //         if (resData.error) {
+  //           if (resData.error.status >= 400 && resData.error.status < 500) {
+  //             window.localStorage.removeItem("user");
+  //             setUser(null);
+  //             navigate("/login");
+  //           }
+  //         } else {
+  //           setUserData(resData.data.user);
+  //         }
+  //       } catch (err) {
+  //         console.log(err);
+  //         navigate("/error");
+  //       }
+  //     }
+  //   };
 
-    checkLogin();
-  }, [user]);
+  //   checkLogin();
+  // }, [user]);
 
   return (
     <div className={styles.wrapper}>
