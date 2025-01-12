@@ -1,7 +1,7 @@
 import styles from "./InboxList.module.css";
 import { useContext } from "react";
 import PropTypes from "prop-types";
-import { InboxListContext } from "../context/InboxListContext";
+import { InboxListContext } from "../../context/InboxListContext";
 
 const InboxList = ({ activeInbox, selectInbox }) => {
   const { inboxList } = useContext(InboxListContext);

@@ -2,7 +2,7 @@
   font-family: "ibm-plex-sans";
   src: url("./assets/fonts/ibm-plex-sans/ibmplexsans-regular-webfont.woff2")
       format("woff2"),
-    url("./assets/fonts//ibm-plex-sans/ibmplexsans-regular-webfont.woff")
+    url("./assets/fonts/ibm-plex-sans/ibmplexsans-regular-webfont.woff")
       format("woff");
   font-weight: 400;
   font-style: normal;
@@ -12,7 +12,7 @@
   font-family: "ibm-plex-sans";
   src: url("./assets/fonts/ibm-plex-sans/ibmplexsans-medium-webfont.woff2")
       format("woff2"),
-    url("./assets/fonts//ibm-plex-sans/ibmplexsans-regular-webfont.woff")
+    url("./assets/fonts/ibm-plex-sans/ibmplexsans-regular-webfont.woff")
       format("woff");
   font-weight: 500;
   font-style: normal;
@@ -22,7 +22,7 @@
   font-family: "ibm-plex-sans";
   src: url("./assets/fonts/ibm-plex-sans/ibmplexsans-semibold-webfont.woff2")
       format("woff2"),
-    url("./assets/fonts//ibm-plex-sans/ibmplexsans-semibold-webfont.woff")
+    url("./assets/fonts/ibm-plex-sans/ibmplexsans-semibold-webfont.woff")
       format("woff");
   font-weight: 600;
   font-style: normal;
@@ -32,20 +32,82 @@
   font-family: "ibm-plex-sans";
   src: url("./assets/fonts/ibm-plex-sans/ibmplexsans-bold-webfont.woff2")
       format("woff2"),
-    url("./assets/fonts//ibm-plex-sans/ibmplexsans-bold-webfont.woff")
+    url("./assets/fonts/ibm-plex-sans/ibmplexsans-bold-webfont.woff")
       format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
+@font-face {
+  font-family: "jersey";
+  src: url("./assets/fonts/jersey/jersey15-regular-webfont.woff2")
+      format("woff2"),
+    url("./assets/fonts/jersey/jersey15-regular-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "oswald";
+  src: url("./assets/fonts/oswald/oswald-regular-webfont.woff2") format("woff2"),
+    url("./assets/fonts/oswald/oswald-regular-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "oswald";
+  src: url("./assets/fonts/oswald/oswald-medium-webfont.woff22") format("woff2"),
+    url("./assets/fonts/oswald/oswald-medium-webfont.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "oswald";
+  src: url("./assets/fonts/oswald/oswald-bold-webfont.woff2") format("woff2"),
+    url("./assets/fonts/oswald/oswald-bold-webfont.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "inter";
+  src: url("./assets/fonts/inter/inter-regular-webfont.woff2") format("woff2"),
+    url("./assets/fonts/inter/inter-regular-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "inter";
+  src: url("./assets/fonts/inter/inter-medium-webfont.woff2") format("woff2"),
+    url("./assets/fonts/inter/inter-medium-webfont.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
 :root {
+  --scale: 1.333;
+  --base-font: 1rem;
+  --h6: calc(var(--base-font) * var(--scale));
+  --h5: calc(var(--h6) * var(--scale));
+  --h4: calc(var(--h5) * var(--scale));
+  --h3: calc(var(--h4) * var(--scale));
+  --h2: calc(var(--h3) * var(--scale));
+  --h1: calc(var(--h2) * var(--scale));
+  --padding-l: var(--h2);
+  --padding-xl: var(--h1);
+
+  --white-100: #f3f1f7;
+  --black-100: #213547;
+  --brand-color: #440099;
   font-family: "ibm-plex-sans", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: #213547;
-  background-color: #f4f4f2;
+  background-color: var(--white-100);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -58,13 +120,20 @@ input {
   background-color: #f4f4f2;
 }
 
+.h2 {
+  font-size: var(--h2);
+  font-family: "jersey";
+  line-height: 1.2;
+}
+
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--black-100);
   text-decoration: inherit;
 }
+
 a:hover {
-  color: #747bff;
+  color: var(--brand-color);
 }
 
 body {
@@ -88,17 +157,11 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f9f9f9;
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: dark) {
 }

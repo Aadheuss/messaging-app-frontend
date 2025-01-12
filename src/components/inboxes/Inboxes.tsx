@@ -3,7 +3,7 @@ import InboxList from "../inboxList/InboxList";
 import chatIcon from "../../assets/images/chat.svg";
 import Inbox from "../inbox/Inbox";
 import { useEffect, useState } from "react";
-import { InboxListContext } from "../context/InboxListContext";
+import { InboxListContext } from "../../context/InboxListContext";
 import { useNavigate } from "react-router-dom";
 
 const Inboxes = () => {

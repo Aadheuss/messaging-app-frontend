@@ -1,21 +1,22 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { UserContext } from "./components/context/UserContext";
+import { UserContext } from "./context/UserContext";
+import { UserValue } from "./types/types";
+import { isLoggedIn } from "./auth/authentication";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<null | UserValue | false>(null);
 
   useEffect(() => {
-    const checkCurrentUser = async () => {
-      const currentUser = JSON.parse(window.localStorage.getItem("user"));
+    const configureUserState = async () => {
+      // Check if the user is authenticated
+      const user = await isLoggedIn();
 
-      if (currentUser) {
-        setUser(currentUser);
-      }
+      setUser(user);
     };
 
-    checkCurrentUser();
+    configureUserState();
   }, []);
 
   return (

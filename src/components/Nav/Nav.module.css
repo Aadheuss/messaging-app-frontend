@@ -1,0 +1,45 @@
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.navList {
+  color: var(--black-100);
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: #213547;
+  transition: 0.1s ease-out;
+  padding: 0;
+}
+
+.navItem:hover {
+  color: var(--brand-color);
+  transform: scale(1.05) translateY(-5%);
+  transition: 0.1d ease-in;
+}
+
+.navItemLink {
+  composes: navItem;
+  font-size: var(--h6);
+  margin: 0;
+}
+
+.logoutBtn {
+  composes: navItemLink;
+  display: flex;
+  gap: 1em;
+}
+
+.txt {
+  margin: 0;
+  padding: 0;
+}
