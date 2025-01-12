@@ -3,7 +3,7 @@ import HomePage from "../pages/Homepage/HomePage";
 import SignupPage from "../components/signupPage/SignupPage";
 import ConnectionErrPage from "../components/connectionErrPage/ConnectionErrPage";
 import NotFoundErrPage from "../components/notFoundErrPage/NotFoundErrPage";
-import LoginPage from "../components/loginPage/LoginPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 import Inboxes from "../components/inboxes/Inboxes";
 
 const routes = [

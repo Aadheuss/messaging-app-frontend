@@ -1,5 +1,5 @@
-import InputContainer from "../inputContainer/InputContainer";
-import Loader from "../loader/Loader";
+import InputContainer from "../InputContainer/InputContainer";
+import Loader from "../Loader/Loader";
 import styles from "./SignupPage.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

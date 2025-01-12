@@ -1,40 +1,85 @@
 import styles from "./LoginPage.module.css";
-import InputContainer from "../inputContainer/InputContainer";
-import Loader from "../loader/Loader";
-import { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import InputContainer from "../../components/InputContainer/InputContainer";
 import { UserContext } from "../../context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  passwordValidation,
+  usernameValidation,
+} from "../../utils/formValidation";
+
+type FormValues = {
+  username: string;
+  password: string;
+};
+
+type validationError = {
+  field: string;
+  msg: string;
+  value: string;
+};
 
 const LoginPage = () => {
+  // Server form validation error message
   const navigate = useNavigate();
-  const [errMsg, setErrMsg] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const redirectRef = useRef<null | HTMLDialogElement>(null);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
+  const [errMsg, setErrMsg] = useState<null | validationError[]>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const methods = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   useEffect(() => {
-    setIsLoading(true);
+    const checkloginSession = () => {
+      if (user !== null && user) {
+        setIsRedirecting(true);
 
-    const startup = () => {
-      setIsLoading(false);
-      setIsMounted(true);
+        // Set up redirection if not currently redirecting
+        if (!isRedirecting) {
+          setTimeout(() => {
+            setIsRedirecting(false);
+            navigate("/chat");
+          }, 10000);
+        }
+
+        console.log("You are logged in!");
+      }
     };
 
-    startup();
-    //eslint-disable-next-line
+    if (isRedirecting) {
+      redirectRef.current?.showModal();
+    }
+
+    checkloginSession();
   }, [user]);
+  const checkValFieldErr = (
+    array: validationError[],
+    field: string
+  ): boolean => {
+    return !!array.find((err) => err.field === field);
+  };
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const getErrMsgByField = (
+    array: validationError[],
+    field: string
+  ): string => {
+    return array.find((err) => err.field === field)?.msg || "";
+  };
 
-    setIsLoading(true);
-
-    let formData = new URLSearchParams();
-    formData.append("username", e.target.elements.username.value);
-    formData.append("password", e.target.elements.password.value);
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const formData = new URLSearchParams();
+    formData.append("username", data.username);
+    formData.append("password", data.password);
 
     try {
-      const res = await fetch("http://localhost:3000/login", {
+      const login = await fetch("http://localhost:3000/login", {
+        mode: "cors",
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -43,92 +88,114 @@ const LoginPage = () => {
         body: formData,
       });
 
-      const resData = await res.json();
+      const loginData = await login.json();
 
-      if (resData.error) {
-        if (resData.error.status === 404) {
-          navigate("/error");
+      // Handle error
+      if (login.status >= 400) {
+        if (loginData.error) {
+          setErrMsg(loginData.error);
         }
-        setErrMsg({
-          error: {
-            ...resData.error,
-            details: resData.error.details.msg.map((msg) => {
-              const path = msg.split(" ").includes("username")
-                ? "username"
-                : "password";
 
-              return {
-                msg: msg,
-                path: path,
-              };
-            }),
-          },
-        });
+        return console.log("Login failed");
       } else {
-        const currentUser = resData.user;
-        window.localStorage.setItem("user", JSON.stringify(currentUser));
-
-        setUser(currentUser);
-        setErrMsg(null);
-        navigate("/");
+        console.log(loginData.user);
       }
     } catch (err) {
-      navigate("/error");
-    } finally {
-      setIsLoading(false);
+      console.log("CAUGHT ERROR: Failed to log in");
     }
   };
 
   return (
     <>
-      {isLoading && <Loader />}
-      {isMounted && (
-        <div className={styles.wrapper}>
-          <main className={styles.signupPage}>
+      <main className={styles.signupPage}>
+        <dialog ref={redirectRef} className={styles.redirectLoader}>
+          <p className={styles.redirectTxt}>You're already logged in</p>
+          <p className={styles.redirectTxtA}>Redirecting...</p>
+        </dialog>
+        <div className={styles.formContainer}>
+          <div>
             <h1 className={styles.greeting}>
-              Login to msg<span className={styles.logoTxt}>Chat</span>
+              Welcome back to octoconvo
+              <br />
             </h1>
+            <p className={styles.greeting2}>
+              log in to start chatting with your friends
+            </p>
+          </div>
+
+          <FormProvider {...methods}>
             <form
               className={styles.form}
-              onSubmit={submitForm}
+              onSubmit={handleSubmit(onSubmit)}
               id="login"
               action=""
               method="post"
             >
-              <InputContainer
-                err={{
-                  errMsg: errMsg ? errMsg.error.details : null,
-                  setErrMsg: setErrMsg,
-                }}
-                id="username"
-                type="text"
-                name="username"
-                isRequired={true}
-                autoComplete={true}
-                text="Username"
-              />
-              <InputContainer
-                setErrMsg={setErrMsg}
-                err={{
-                  errMsg: errMsg ? errMsg.error.details : null,
-                  setErrMsg: setErrMsg,
-                }}
-                id="password"
-                type="password"
-                name="password"
-                isRequired={true}
-                text="Password"
-                length={{ min: 8, max: 0 }}
-                clientValidation={["minimum of 8 digits"]}
-                autoComplete="current-password"
-              />
-              <div>
-                <button className={styles.signupBtn}>Login</button>
-              </div>
+              <InputContainer>
+                {
+                  <>
+                    {errMsg && checkValFieldErr(errMsg, "username") && (
+                      <span className="error-txt">
+                        {getErrMsgByField(errMsg, "username")}
+                      </span>
+                    )}
+                    {errors.username && (
+                      <span className="error-txt">
+                        {errors.username.message}
+                      </span>
+                    )}
+                    <label className="label" htmlFor="username">
+                      Username
+                    </label>
+                    <input
+                      className="input"
+                      id="username"
+                      type="text"
+                      autoComplete="username"
+                      {...register("username", usernameValidation)}
+                    />
+                  </>
+                }
+              </InputContainer>
+              <InputContainer>
+                {
+                  <>
+                    {errMsg && checkValFieldErr(errMsg, "password") && (
+                      <span className="error-txt">
+                        {getErrMsgByField(errMsg, "password")}
+                      </span>
+                    )}
+                    {errors.password && (
+                      <span className="error-txt">
+                        {errors.password.message}
+                      </span>
+                    )}
+                    <label className="label" htmlFor="password">
+                      Password
+                    </label>
+                    <input
+                      className="input"
+                      id="password"
+                      type="password"
+                      autoComplete="new-password"
+                      {...register("password", passwordValidation)}
+                    />
+                  </>
+                }
+              </InputContainer>
+
+              <button className={styles.signupBtn}>Login</button>
             </form>
-          </main>
+          </FormProvider>
+          <div className={styles.invContainer}>
+            <h2 className={styles.signupTxt}>Don't have an account?</h2>
+
+            <Link to="/signup" className={styles.signupLink}>
+              Signup
+            </Link>
+          </div>
         </div>
-      )}
+      </main>
     </>
   );
 };

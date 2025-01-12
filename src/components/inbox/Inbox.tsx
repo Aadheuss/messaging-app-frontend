@@ -3,7 +3,7 @@ import styles from "./Inbox.module.css";
 import PropTypes from "prop-types";
 import { UserContext } from "../../context/UserContext";
 import { InboxListContext } from "../../context/InboxListContext";
-import Loader from "../loader/Loader";
+import Loader from "../Loader/Loader";
 import sendIcon from "../../assets/images/send.svg";
 import { useNavigate } from "react-router-dom";
 
