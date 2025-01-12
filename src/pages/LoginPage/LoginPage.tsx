@@ -26,7 +26,7 @@ const LoginPage = () => {
   const redirectRef = useRef<null | HTMLDialogElement>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
-  const [errMsg, setErrMsg] = useState<null | validationError[]>(null);
+  const [errMsg, setErrMsg] = useState<null | validationError>(null);
   const [isLoading, setIsLoading] = useState(false);
   const methods = useForm<FormValues>();
   const {
@@ -57,19 +57,9 @@ const LoginPage = () => {
     }
 
     checkloginSession();
-  }, [user]);
-  const checkValFieldErr = (
-    array: validationError[],
-    field: string
-  ): boolean => {
-    return !!array.find((err) => err.field === field);
-  };
-
-  const getErrMsgByField = (
-    array: validationError[],
-    field: string
-  ): string => {
-    return array.find((err) => err.field === field)?.msg || "";
+  }, [user, isRedirecting]);
+  const checkErrValField = (err: validationError, field: string): boolean => {
+    return err.field === field;
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -93,12 +83,21 @@ const LoginPage = () => {
       // Handle error
       if (login.status >= 400) {
         if (loginData.error) {
-          setErrMsg(loginData.error);
+          console.log(loginData);
+          setErrMsg(loginData.error.error);
         }
 
         return console.log("Login failed");
       } else {
-        console.log(loginData.user);
+        setIsRedirecting(true);
+
+        // Set up redirection if not currently redirecting
+        if (!isRedirecting) {
+          setTimeout(() => {
+            setIsRedirecting(false);
+            navigate("/chat");
+          }, 3000);
+        }
       }
     } catch (err) {
       console.log("CAUGHT ERROR: Failed to log in");
@@ -109,7 +108,7 @@ const LoginPage = () => {
     <>
       <main className={styles.signupPage}>
         <dialog ref={redirectRef} className={styles.redirectLoader}>
-          <p className={styles.redirectTxt}>You're already logged in</p>
+          <p className={styles.redirectTxt}>logging in</p>
           <p className={styles.redirectTxtA}>Redirecting...</p>
         </dialog>
         <div className={styles.formContainer}>
@@ -134,10 +133,8 @@ const LoginPage = () => {
               <InputContainer>
                 {
                   <>
-                    {errMsg && checkValFieldErr(errMsg, "username") && (
-                      <span className="error-txt">
-                        {getErrMsgByField(errMsg, "username")}
-                      </span>
+                    {errMsg && checkErrValField(errMsg, "username") && (
+                      <span className="error-txt">{errMsg.msg}</span>
                     )}
                     {errors.username && (
                       <span className="error-txt">
@@ -151,6 +148,7 @@ const LoginPage = () => {
                       className="input"
                       id="username"
                       type="text"
+                      onInput={() => setErrMsg(null)}
                       autoComplete="username"
                       {...register("username", usernameValidation)}
                     />
@@ -160,10 +158,8 @@ const LoginPage = () => {
               <InputContainer>
                 {
                   <>
-                    {errMsg && checkValFieldErr(errMsg, "password") && (
-                      <span className="error-txt">
-                        {getErrMsgByField(errMsg, "password")}
-                      </span>
+                    {errMsg && checkErrValField(errMsg, "password") && (
+                      <span className="error-txt">{errMsg.msg}</span>
                     )}
                     {errors.password && (
                       <span className="error-txt">
@@ -177,7 +173,8 @@ const LoginPage = () => {
                       className="input"
                       id="password"
                       type="password"
-                      autoComplete="new-password"
+                      autoComplete="current-password"
+                      onInput={() => setErrMsg(null)}
                       {...register("password", passwordValidation)}
                     />
                   </>
